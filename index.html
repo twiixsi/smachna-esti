@@ -1,0 +1,2499 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Смачна есці — смак памяці | Кулинарная память белорусских женщин</title>
+<meta name="description" content="Белорусская кухня как живая память поколений: рецепты, регионы и истории женщин, которые сохранили кулинарные традиции в годы Великой Отечественной войны.">
+<link rel="preconnect" href="https://cfzdvjsnomqwcivaulvo.supabase.co" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --red:#8C2A22; --red-deep:#5E1A15; --red-soft:#B4554C;
+  --green:#5A8F6E; --green-dark:#3E6650;
+  --gold:#E8B84B; --gold-soft:#F3E2B8;
+  --bg:#FAF8F5; --paper:#FFFDFA; --sand:#F3EDE3;
+  --ink:#221D1A; --muted:#6E655E; --line:#E7DDD0;
+  --shadow:0 14px 38px rgba(60,38,28,.09);
+  --shadow-lift:0 22px 50px rgba(60,38,28,.16);
+  --rushnyk:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='26' viewBox='0 0 48 26'%3E%3Cg fill='none' stroke='%238C2A22' stroke-width='2'%3E%3Cpath d='M24 3 L37 13 L24 23 L11 13 Z'/%3E%3Cpath d='M0 13 L5 8 M0 13 L5 18 M48 13 L43 8 M48 13 L43 18'/%3E%3C/g%3E%3Crect x='21' y='10' width='6' height='6' fill='%23E8B84B'/%3E%3C/svg%3E");
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:86px}
+body{font-family:'Rubik',sans-serif;font-size:1.18rem;line-height:1.8;background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.serif{font-family:'Playfair Display',serif;line-height:1.15;font-weight:700}
+img{display:block;max-width:100%}
+button,input,textarea,select{font-family:'Rubik',sans-serif}
+a{color:inherit}
+::selection{background:var(--red);color:#fff}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+.rushnyk{height:26px;background-image:var(--rushnyk);background-repeat:repeat-x;background-position:center;opacity:.85}
+/* ============ ДОПОЛНИТЕЛЬНЫЕ АНИМАЦИИ ============ */
+/* Логотип: переливающаяся надпись + «живой» знак */
+@keyframes logoShine{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.logo .lname{background:linear-gradient(90deg,var(--red) 0%,#D4685C 22%,var(--gold) 50%,#D4685C 78%,var(--red) 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:logoShine 5s linear infinite}
+@keyframes markPulse{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.08) rotate(-4deg)}}
+.logo .mark{animation:markPulse 3.4s ease-in-out infinite;transform-origin:center}
+
+/* Портрет в hero легко «парит» */
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hero-portrait .ph-wrap{animation:floaty 6s ease-in-out infinite}
+
+/* Появление заголовка и лида героя */
+@keyframes heroTitleIn{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+.hero h1{animation:heroTitleIn .9s ease both}
+.hero .lead{animation:heroTitleIn .9s .25s ease both}
+.hero-portrait.reveal{animation:heroTitleIn 1s .3s ease both}
+.hero-portrait.reveal.visible{animation:none}
+
+/* Бегущая строка в hero */
+.marquee{overflow:hidden;white-space:nowrap;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:inline-flex;align-items:center;animation:marquee 24s linear infinite;will-change:transform}
+.marquee-track>span{display:inline-flex;align-items:center;padding-right:56px}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.hero-years .mq-star{color:var(--gold)}
+
+/* Активная область карты «пульсирует» */
+@keyframes mapPulse{0%,100%{fill:rgba(140,42,34,.44)}50%{fill:rgba(140,42,34,.66)}}
+.map-overlay path.active{animation:mapPulse 2.2s ease-in-out infinite}
+
+/* Подчёркивание заголовков секций */
+.section-head h2::after{content:'';display:block;width:64px;height:4px;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:2px;margin-top:12px;transition:width .45s ease}
+.section-head h2:hover::after{width:150px}
+.band .section-head h2::after,.band-dark .section-head h2::after{width:64px}
+
+/* Блик на красных кнопках */
+.btn-red{position:relative;overflow:hidden}
+.btn-red::after{content:'';position:absolute;top:0;left:-90%;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg);animation:btnShine 3.4s ease infinite;pointer-events:none}
+@keyframes btnShine{0%{left:-90%}55%,100%{left:140%}}
+
+/* Номинация — светящийся акцент */
+@keyframes nomGlow{0%,100%{box-shadow:0 0 0 0 rgba(232,184,75,.15)}50%{box-shadow:0 0 20px 3px rgba(232,184,75,.4)}}
+.nom-highlight{display:inline-block;background:linear-gradient(120deg,var(--gold-soft),#F8ECC8);border:1.5px solid var(--gold);color:#7d631f;font-weight:700;padding:5px 14px;border-radius:999px;animation:nomGlow 3s ease-in-out infinite;line-height:1.4}
+
+/* Появление карточек блюд с задержкой */
+@keyframes cardIn{from{opacity:0;transform:translateY(22px) scale(.98)}to{opacity:1;transform:none}}
+.dish-card{animation:cardIn .5s ease both}
+
+
+
+/* ============ АНИМАЦИИ, ЧАСТЬ 2 ============ */
+/* Полоса прогресса прокрутки */
+#scrollProgress{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--red),var(--gold));z-index:1300;border-radius:0 4px 4px 0;box-shadow:0 0 10px rgba(232,184,75,.6)}
+/* Тень шапки при прокрутке */
+header.scrolled{box-shadow:0 8px 26px rgba(60,38,28,.13)}
+
+/* Зум фото блюда при наведении */
+.dish-img{transition:transform .55s ease}
+.dish-card:hover .dish-img{transform:scale(1.08)}
+
+/* Фото «Нити памяти»: ч/б → цвет */
+.thread-photo img{filter:grayscale(.45) sepia(.15);transition:filter .45s,transform .6s ease}
+.thread-item:hover .thread-photo img,.thread-item.open .thread-photo img{filter:none;transform:scale(1.06)}
+
+/* Звёздочки под портретом мерцают */
+@keyframes starTwinkle{0%,100%{opacity:.55;transform:scale(.9) rotate(0)}50%{opacity:1;transform:scale(1.25) rotate(18deg)}}
+.hp-star{display:inline-block;color:var(--gold);animation:starTwinkle 2.6s ease-in-out infinite}
+figcaption .hp-star:last-child{animation-delay:1.3s}
+
+/* Метка «Что вас ждёт на сайте» мягко дышит */
+@keyframes labelBreathe{0%,100%{letter-spacing:.02em}50%{letter-spacing:.12em}}
+.hf-label{animation:labelBreathe 5s ease-in-out infinite}
+
+/* Кнопка избранного «сердцебиение» */
+@keyframes heartBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+#favBtn.btn-red{animation:heartBeat 1.7s ease-in-out infinite}
+
+/* Появление тегов областей каскадом */
+@keyframes tagIn{from{opacity:0;transform:translateY(10px) scale(.92)}to{opacity:1;transform:none}}
+.region-tag{animation:tagIn .4s ease both}
+
+/* Карточки женщин и семейные — лёгкий наклон при наведении */
+.woman-card{transition:box-shadow .3s,transform .3s,border-color .3s}
+.woman-card:hover{transform:translateY(-6px) rotate(-.6deg)}
+.family-card:hover{transform:translateY(-4px) rotate(.4deg)}
+
+/* Цитата мерцает рамкой при появлении */
+.quote-band blockquote{position:relative;padding:26px 10px}
+.quote-band blockquote::before,.quote-band blockquote::after{content:'\2726';position:absolute;color:var(--gold);opacity:.7;animation:starTwinkle 3s ease-in-out infinite}
+.quote-band blockquote::before{top:-6px;left:50%;transform:translateX(-50%)}
+.quote-band blockquote::after{bottom:-6px;left:50%;transform:translateX(-50%);animation-delay:1.5s}
+
+/* «Скотч» на семейных карточках при наведении чуть поворачивается */
+@keyframes tapeWiggle{0%,100%{transform:translateX(-50%) rotate(-2deg)}50%{transform:translateX(-50%) rotate(2deg)}}
+.family-card:hover::before{animation:tapeWiggle .6s ease}
+
+/* ХЕДЕР */
+header{position:sticky;top:0;z-index:120;background:rgba(250,248,245,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hwrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;padding:12px 32px;max-width:1280px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:12px;cursor:pointer;background:none;border:none;text-align:left;padding:0;justify-self:start}
+.logo>span{display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.logo .mark{width:46px;height:46px;flex:none;filter:drop-shadow(0 3px 6px rgba(140,42,34,.3))}
+.logo .lname{display:block;font-family:'Pacifico',cursive;font-size:1.85rem;color:var(--red);line-height:1.05;text-shadow:0 2px 0 rgba(232,184,75,.45)}
+.logo .lsub{display:block;white-space:nowrap;font-size:.8rem;color:var(--gold);letter-spacing:.22em;font-weight:700;text-transform:uppercase;margin-top:2px}
+nav.main{display:flex;align-items:center;justify-content:center;gap:4px;justify-self:center}
+nav.main a{text-decoration:none;color:#3c352f;font-weight:600;padding:9px 13px;white-space:nowrap;line-height:1.2;display:inline-flex;align-items:center;border-radius:10px;font-size:1.02rem;transition:background .18s,color .18s;cursor:pointer}
+nav.main a:hover{background:var(--sand);color:var(--red)}
+.hactions{display:flex;align-items:center;justify-content:flex-end;gap:8px;justify-self:end;min-height:42px}
+.hactions .btn{height:40px;line-height:1}
+.burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;width:42px;height:42px;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:4px}
+.burger span{display:block;width:18px;height:2px;background:var(--red);border-radius:2px}
+.mobile-menu{display:none;border-top:1px solid var(--line);background:var(--paper);padding:10px 22px 18px}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;padding:11px 4px;text-decoration:none;font-weight:500;border-bottom:1px solid var(--line);cursor:pointer}
+.mobile-menu .mm-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.btn{padding:10px 20px;border-radius:11px;border:none;cursor:pointer;font-weight:600;font-size:.94rem;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background .18s,color .18s,border-color .18s,transform .1s}
+.btn:active{transform:scale(.97)}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{background:var(--red-deep)}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:var(--green-dark)}
+.btn-ghost{background:transparent;border:1.5px solid var(--line);color:#4a423b}
+.btn-ghost:hover{border-color:var(--red);color:var(--red)}
+.btn-sm{padding:7px 14px;font-size:.85rem;border-radius:9px}
+
+/* ГЕРО */
+.hero{position:relative;overflow:hidden;background:linear-gradient(120deg,#FAF8F5 0%,#F7F0E2 55%,#F3E7CE 100%);border-bottom:1px solid var(--line)}
+.hero-inner{position:relative;max-width:1280px;margin:0 auto;padding:74px 32px 0;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.85fr);gap:56px;align-items:start}
+.hero-inner>*{min-width:0}
+.hero-years{display:block;margin:0 -32px 26px;color:#FFF6E3;font-weight:700;font-size:1.02rem;letter-spacing:.16em;text-transform:uppercase;
+  background:linear-gradient(90deg,var(--red-deep),var(--red) 28%,#A8423A 50%,var(--red) 72%,var(--red-deep));
+  border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);
+  box-shadow:0 10px 26px rgba(140,42,34,.32),inset 0 1px 0 rgba(255,255,255,.14);
+  padding:13px 0;position:relative;z-index:2}
+.hero-years::before,.hero-years::after{content:'';position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.6}
+.hero-years::before{top:3px}.hero-years::after{bottom:3px}
+.hero-years .mq-star{color:var(--gold);display:inline-block;animation:starTwinkle 2.4s ease-in-out infinite;text-shadow:0 0 8px rgba(232,184,75,.8)}
+.hero-years .marquee-track>span{padding-top:2px;padding-bottom:2px}
+.hero h1{font-size:clamp(2.9rem,6.2vw,4.9rem);font-weight:800;letter-spacing:-.015em;text-shadow:0 3px 0 rgba(232,184,75,.3)}
+.hero h1 em{font-style:italic;font-weight:700;color:var(--red)}
+.hero .lead{font-size:1.24rem;color:#4b443e;max-width:60ch;margin-top:24px}
+.hero .lead b{color:var(--red);font-weight:600}
+.hero-portrait{margin:0 8px 22px;position:relative;text-align:center}
+.hero-portrait .ph-wrap{width:100%;max-width:340px;margin:0 auto;aspect-ratio:3/4;border-radius:180px 180px 20px 20px;border:5px solid #fff;box-shadow:0 0 0 3px var(--gold),var(--shadow-lift);overflow:hidden;background:linear-gradient(160deg,var(--red) 0%,var(--red-deep) 70%)}
+.hero-portrait img,.hero-portrait video{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.hero-portrait figcaption{margin-top:14px;font-family:'Playfair Display',serif;font-weight:700;color:var(--red);font-size:1.05rem}
+.hero-portrait .hp-star{color:var(--gold)}
+.hero-stats{position:relative;max-width:1280px;margin:52px auto 0;padding:0 32px}
+.hero-stats .hs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding-bottom:8px}
+.hs-item{background:var(--paper);border:1px solid var(--line);border-bottom:4px solid var(--gold);border-radius:18px;padding:22px 18px 24px;text-align:center;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden}
+.hs-item::before{content:'\2726';position:absolute;top:10px;left:14px;color:var(--gold);opacity:.7;font-size:.9rem}
+.hs-item:hover{transform:translateY(-6px);box-shadow:var(--shadow-lift)}
+.hs-item b{font-family:'Playfair Display',serif;font-size:2.9rem;color:var(--red);display:block;line-height:1;text-shadow:0 2px 0 rgba(232,184,75,.35)}
+.hs-item span{color:var(--muted);font-size:1rem;display:block;margin-top:6px}
+
+/* СЕКЦИИ */
+.section{max-width:1280px;margin:0 auto;padding:78px 32px}
+.section-head{max-width:66ch;margin-bottom:44px}
+.dish-check-list{max-height:230px;overflow:auto;border:1.5px solid var(--line);border-radius:12px;background:#fff;margin-bottom:6px}
+.dish-check-list label{display:flex;align-items:center;gap:10px;padding:9px 13px;cursor:pointer;border-bottom:1px solid var(--line);font-size:.95rem}
+.dish-check-list label:last-child{border-bottom:0}
+.dish-check-list label:hover{background:var(--sand)}
+.dish-check-list input{width:18px;height:18px;accent-color:var(--green);flex:none}
+.dish-check-list .dc-region{margin-left:auto;color:var(--muted);font-size:.8rem;white-space:nowrap}
+.head-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:48px;align-items:center;margin-bottom:44px}
+.head-split .section-head{margin-bottom:0;max-width:none}
+.head-pic{margin:0;background:none;border:0;box-shadow:none;border-radius:0;overflow:visible}
+.head-pic img{width:100%;height:auto;max-height:440px;object-fit:contain;object-position:center;display:block;border:0;box-shadow:none}
+.head-pic img[data-si="family_head"]{
+  width:135%;
+  max-width:none;
+  margin-left:-17.5%;
+} 
+.head-pic img[data-si="thread_head"] {
+  width:115%;
+  max-width:none;
+  margin-left:-7.5%;
+}
+@media (max-width:1040px){.head-split{grid-template-columns:1fr;gap:26px}.head-pic{max-width:520px}}
+.section-head h2{font-size:clamp(2.2rem,3.6vw,3.05rem);margin-bottom:16px}
+.section-head p{color:#57504a;font-size:1.16rem;line-height:1.75}
+.band{background:var(--sand)}
+.band-dark{background:#241C18;color:#EDE4D8}
+
+/* Нить памяти */
+.thread{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:start}
+.thread-item{background:var(--paper);border:1.5px solid var(--line);border-top:4px solid var(--red);border-radius:14px;padding:24px 24px 20px;transition:.35s;position:relative;cursor:pointer}
+.thread-item:nth-child(4){border-top-color:var(--green)}
+.thread-item:hover,.thread-item.open{transform:translateY(-7px);box-shadow:0 26px 54px rgba(160,49,37,.2);border-color:var(--gold);z-index:2;background:#FFFDF6;background-image:radial-gradient(circle at 100% 0%,rgba(232,184,75,.14),transparent 55%)}
+.thread-item:hover .thread-detail,.thread-item.open .thread-detail{opacity:1;max-height:520px;margin-top:14px}
+.thread-item .year{display:inline-flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--red);font-weight:700}
+.thread-item .year::before{content:'';width:10px;height:10px;background:var(--gold);transform:rotate(45deg);flex:none}
+.thread-item:nth-child(4) .year{color:var(--green-dark)}
+.thread-item h3{font-size:1.3rem;margin:10px 0 8px}
+.thread-item p{font-size:1.05rem;color:#4b443e}
+.thread-detail{opacity:0;max-height:0;overflow:hidden;margin-top:0;transition:opacity .35s ease,max-height .55s ease,margin .35s ease}
+.thread-facts{list-style:none;margin-top:12px}
+.thread-facts li{position:relative;padding-left:22px;font-size:1rem;color:#4A4038;margin-top:8px;line-height:1.6}
+.thread-facts li::before{content:'';position:absolute;left:4px;top:7px;width:7px;height:7px;background:var(--red);transform:rotate(45deg)}
+.thread-photo{margin-top:14px;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--sand)}
+.thread-photo img{width:100%;height:130px;object-fit:cover;display:block}
+.thread-open-hint{display:inline-flex;align-items:center;gap:9px;background:var(--gold-soft);color:#7d631f;font-weight:600;font-size:.95rem;padding:8px 18px;border-radius:999px;margin-top:16px}
+
+/* hero-feats — 4 карточки одинаковой высоты */
+.hero-feats{max-width:1280px;margin:0 auto;padding:0 32px 50px}
+.hf-label{text-align:center;font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--red);font-weight:700;margin-bottom:18px}
+.hf-label::before,.hf-label::after{content:'\2726';color:var(--gold);margin:0 14px;font-size:.9em}
+.hf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:stretch;grid-auto-rows:1fr}
+.hf-item{display:flex;flex-direction:column;background:var(--paper);border:1.5px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;padding:0;text-align:left;transition:transform .3s,box-shadow .3s,border-color .3s;height:100%}
+.hf-item:hover{border-color:var(--gold);transform:translateY(-7px);box-shadow:var(--shadow-lift)}
+.hf-item .hf-img{width:100%;height:180px;flex:none;object-fit:cover;display:block;transition:transform .5s}
+.hf-item:hover .hf-img{transform:scale(1.06)}
+.hf-item .hf-body{display:flex;flex-direction:column;flex:1;padding:16px 19px 20px}
+.hf-item b{display:block;font-family:'Playfair Display',serif;font-size:1.22rem;color:var(--red);font-weight:700;line-height:1.2;min-height:2.5em}
+.hf-item .hf-body span{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:.97rem;color:var(--muted);margin-top:6px;line-height:1.55}
+
+/* КАРТА */
+.map-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:46px;align-items:start}
+.map-frame{position:relative;border-radius:22px;overflow:hidden;border:3px solid var(--gold);background:#F5EFE4;box-shadow:0 24px 55px rgba(122,84,32,.18);aspect-ratio:1280/1150}
+.map-frame img.map-base{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
+.map-overlay{position:absolute;inset:0;width:100%;height:100%}
+.map-overlay path{fill:rgba(140,42,34,0);stroke:rgba(140,42,34,0);stroke-width:0;cursor:pointer;transition:fill .22s}
+.map-overlay path:hover{fill:rgba(140,42,34,.26)}
+.map-overlay path.active{fill:rgba(140,42,34,.44)}
+.region-panel{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:30px 32px;box-shadow:var(--shadow)}
+.region-panel h3{font-size:1.9rem;color:var(--red);margin-bottom:12px}
+.region-panel .rdesc{color:#544c45;margin-bottom:20px}
+.region-keepers{background:linear-gradient(180deg,#FFFDF6,#FAF4E6);border:1px solid var(--line);border-left:4px solid var(--green);padding:18px 20px;border-radius:12px;margin-bottom:22px}
+.rk-empty{font-size:.92rem;color:var(--muted)}
+.region-tags{display:flex;flex-wrap:wrap;gap:8px}
+.region-tag{padding:9px 17px;border-radius:999px;border:1.5px solid var(--line);background:#fff;cursor:pointer;font-weight:600;font-size:.95rem;transition:.18s;box-shadow:0 2px 6px rgba(60,38,28,.05)}
+.region-tag:hover{border-color:var(--red-soft);transform:translateY(-2px);box-shadow:0 6px 14px rgba(160,49,37,.12)}
+.region-tag.active{background:var(--red);border-color:var(--red);color:#fff}
+.panel-label{font-size:1.02rem;font-weight:700;color:var(--red);margin-bottom:10px;letter-spacing:.02em}
+.panel-label::before{content:'\2726 ';color:var(--gold)}
+.step-note{font-size:.98rem;color:#6b5f43;margin-bottom:12px;line-height:1.55}
+.chip{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 16px 6px 7px;font-size:.95rem;font-weight:600;cursor:pointer;margin:0 6px 8px 0;transition:.18s}
+.kc-av{width:34px;height:34px;border-radius:50%;flex:none;background:linear-gradient(135deg,var(--red),var(--red-deep));color:#fff;display:inline-flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;overflow:hidden}
+.kc-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.chip:hover{background:var(--gold-soft);border-color:var(--gold);transform:translateY(-2px)}
+
+/* БЛЮДА */
+.dishes-toolbar{display:flex;gap:16px;align-items:center;margin-bottom:34px;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px 22px}
+.search-box{display:flex;align-items:center;gap:9px;background:var(--paper);border:2px solid var(--gold);border-radius:13px;padding:13px 18px;min-width:320px;flex:1;max-width:460px}
+.search-box input{border:none;outline:none;font-size:.98rem;background:transparent;width:100%}
+.count-note{color:var(--muted);font-size:.9rem}
+.dishes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:30px}
+.dish-card{background:var(--paper);border:1px solid var(--line);border-top:5px solid var(--gold);border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:box-shadow .25s,transform .25s}
+.dish-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lift)}
+.dish-img{width:100%;height:215px;object-fit:cover;background:linear-gradient(135deg,#F0E4CE,#DCC9A4)}
+.dish-body{padding:20px 22px 22px;display:flex;flex-direction:column;gap:7px;flex:1}
+.dish-body .region-label{font-size:.85rem;color:var(--green-dark);font-weight:700;background:#E7F1EA;align-self:flex-start;padding:4px 13px;border-radius:999px;letter-spacing:.03em}
+.dish-body h4{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700}
+.dish-body .subtitle{color:var(--muted);font-size:.95rem}
+.dish-body p{color:#57504a;font-size:1.08rem;flex:1;margin-top:6px;line-height:1.7}
+.keeper-line{font-size:.86rem;color:var(--red);border-top:1px dashed var(--line);padding-top:10px;margin-top:6px}
+.dish-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.rating-line{display:flex;align-items:center;gap:6px;font-weight:600;color:var(--red);font-size:.9rem}
+.rating-line .stars{color:var(--gold);letter-spacing:1px}
+.cal{font-size:.79rem;color:#6b5b43;background:var(--sand);padding:4px 10px;border-radius:999px}
+.empty-state{grid-column:1/-1;text-align:center;padding:54px 20px;border:1px dashed var(--line);border-radius:4px;background:var(--paper)}
+.empty-state .big{font-size:2.6rem;display:block;margin-bottom:10px}
+.empty-state b{display:block;font-size:1.1rem;margin-bottom:6px}
+.empty-state p{color:var(--muted);max-width:44ch;margin:0 auto 16px}
+
+/* ЖЕНЩИНЫ */
+.women-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px}
+.woman-card{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--red);border-radius:18px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:box-shadow .3s,transform .3s,border-color .3s;text-align:left;padding:0}
+.woman-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lift);border-color:var(--gold)}
+.woman-photo{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--red),var(--red-deep));
+  border-radius:14px;
+  box-shadow:0 10px 24px rgba(60,38,28,.16);
+  margin:18px 18px 0;
+  aspect-ratio:1/1;
+  height:auto;
+  transition:box-shadow .35s,transform .35s}
+.woman-card:hover .woman-photo{box-shadow:0 0 0 3px var(--gold),0 0 26px rgba(232,184,75,.5),0 18px 38px rgba(60,38,28,.24);transform:translateY(-4px)}
+.woman-photo .wp{transition:transform .8s ease}
+.woman-card:hover .wp{transform:scale(1.09)}
+.woman-card.modern .woman-photo{box-shadow:0 10px 24px rgba(60,38,28,.16)}
+.woman-card.modern:hover .woman-photo{box-shadow:0 0 0 3px var(--green),0 0 26px rgba(90,143,110,.5),0 18px 38px rgba(60,38,28,.24)}
+.woman-photo .wp{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.woman-photo .initial{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:3.6rem;color:rgba(255,255,255,.92);font-weight:700}
+.woman-photo .wregion{position:absolute;top:11px;left:50%;transform:translateX(-50%);white-space:nowrap;z-index:2;background:rgba(94,26,21,.85);color:#FFE9C9;font-size:.74rem;font-weight:700;padding:5px 12px;border-radius:999px;letter-spacing:.04em}
+.woman-card.modern{border-top-color:var(--green)}
+.woman-card.modern .woman-photo{background:linear-gradient(135deg,var(--green),var(--green-dark))}
+.woman-card.modern .woman-photo .wregion{background:rgba(62,102,80,.88);color:#EAF5EC}
+.woman-body{padding:18px 22px 22px;display:flex;flex-direction:column;gap:6px;flex:1}
+.wname{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--red)}
+.woman-card.modern .wname{color:var(--green-dark)}
+.wmeta{font-size:.92rem;color:var(--muted)}
+.wrole{align-self:flex-start;background:var(--sand);color:#6b5b43;padding:3px 11px;border-radius:999px;font-size:.76rem;font-weight:600;margin-top:4px}
+.woman-body p{color:#57504a;font-size:1rem;margin-top:8px;flex:1;line-height:1.75}
+.wmore{margin-top:auto;padding-top:12px;color:var(--red);font-weight:600;font-size:.87rem}
+.woman-card.modern .wmore{color:var(--green-dark)}
+.woman-war-banner{grid-column:1/-1;text-align:center;padding:24px 20px;margin:6px 0 12px;background:linear-gradient(180deg,#F9F1DF,#F3E8CF);border:1.5px solid rgba(160,49,37,.35);border-radius:999px;position:relative;box-shadow:var(--shadow)}
+.woman-war-banner span{position:relative;font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,2rem);color:var(--red);font-weight:700}
+.woman-war-banner small{position:relative;display:block;margin-top:6px;color:#8a7458;font-size:.95rem;font-weight:500}
+.woman-modern-banner{grid-column:1/-1;text-align:center;padding:24px 20px;margin:18px 0 12px;background:linear-gradient(180deg,#EAF3EC,#DFEEE2);border:1.5px solid rgba(62,102,80,.4);border-radius:999px;position:relative;box-shadow:var(--shadow)}
+.woman-modern-banner span{position:relative;font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,2rem);color:var(--green-dark);font-weight:700}
+.woman-modern-banner small{position:relative;display:block;margin-top:6px;color:#5c7261;font-size:.95rem;font-weight:500}
+
+/* СЕМЕЙНЫЕ РЕЦЕПТЫ */
+.family-invite{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:26px 30px;margin-bottom:34px}
+.family-invite h3{font-size:1.25rem;color:var(--red);margin-bottom:8px;font-weight:600}
+.family-invite p{color:#57504a;font-size:.95rem;max-width:62ch}
+.family-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+.family-card{background:linear-gradient(180deg,#FFFDF6,#FAF3E2);position:relative;border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:box-shadow .25s,transform .25s;padding:0}
+.family-card::before{content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-2deg);width:92px;height:20px;background:rgba(232,184,75,.55);border:1px dashed rgba(160,49,37,.35);z-index:2}
+.family-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lift)}
+.family-card .fc-img{width:100%;height:180px;object-fit:cover;background:var(--sand)}
+.family-card .fc-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.fc-from{font-family:'Playfair Display',serif;font-style:italic;font-size:1.4rem;color:var(--red);font-weight:700}
+.fc-years{font-size:.85rem;color:var(--muted)}
+.fc-dish{align-self:flex-start;font-size:.76rem;color:var(--green-dark);font-weight:600;background:#E7F1EA;padding:3px 10px;border-radius:999px;margin-top:2px}
+.family-card p{color:#57504a;font-size:1.02rem;margin-top:6px;flex:1;line-height:1.7;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.fc-meta{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:.8rem}
+.fc-meta .author{color:var(--green-dark);font-weight:600}
+
+
+/* ГДЕ ПОПРОБОВАТЬ */
+.try-line{display:flex;align-items:center;gap:8px;width:100%;margin-top:6px;padding:9px 13px;border-radius:12px;border:1.5px solid rgba(62,102,80,.35);background:linear-gradient(180deg,#F1F8F3,#E7F1EA);color:var(--green-dark);font-weight:600;font-size:.88rem;text-align:left;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
+.try-line:hover{border-color:var(--green);background:#DDEEE2;transform:translateY(-2px)}
+.try-line .tl-text{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.try-line .tl-go{flex:none;font-size:.8rem;opacity:.85}
+.try-jump{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:8px 16px;border-radius:999px;border:1.5px solid rgba(62,102,80,.4);background:#E7F1EA;color:var(--green-dark);font-weight:600;font-size:.92rem;cursor:pointer;transition:background .18s}
+.try-jump:hover{background:#D5EADB}
+.tryit{background:linear-gradient(180deg,#F4FAF6,#E8F2EB);border:1.5px solid rgba(62,102,80,.38);border-top:5px solid var(--green);border-radius:18px;padding:22px 22px 20px;margin:28px 0;scroll-margin-top:20px}
+.tryit-head{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.tryit-head .ti-ico{width:42px;height:42px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.tryit-head h3{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--green-dark);margin:0}
+.tryit-sub{color:#5c7261;font-size:.95rem;margin:2px 0 6px 54px}
+.pl-card{background:#fff;border:1.5px solid var(--line);border-radius:16px;margin-top:12px;overflow:hidden;transition:border-color .2s,box-shadow .25s}
+.pl-card:hover{border-color:var(--green)}
+.pl-card.open{border-color:var(--green);box-shadow:0 14px 32px rgba(62,102,80,.18)}
+.pl-top{display:flex;gap:14px;align-items:center;width:100%;padding:12px 14px 12px 12px;background:none;border:0;text-align:left;cursor:pointer;color:inherit}
+.pl-thumb{width:104px;height:78px;border-radius:11px;object-fit:cover;flex:none;background:linear-gradient(135deg,var(--green),var(--green-dark))}
+.pl-thumb.ph{display:flex;align-items:center;justify-content:center;color:#fff}
+.pl-info{flex:1;min-width:0}
+.pl-info .pname{font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem;color:var(--ink);line-height:1.25}
+.pl-info .paddr{display:flex;align-items:flex-start;gap:6px;color:var(--muted);font-size:.9rem;margin-top:4px;line-height:1.4}
+.pl-chev{flex:none;width:34px;height:34px;border-radius:50%;background:var(--sand);display:flex;align-items:center;justify-content:center;color:var(--green-dark);transition:transform .3s,background .2s}
+.pl-card.open .pl-chev{transform:rotate(180deg);background:#DDEEE2}
+.pl-more{display:none;padding:0 14px 16px}
+.pl-card.open .pl-more{display:block;animation:cardIn .35s ease both}
+.pl-bigimg{width:100%;height:240px;object-fit:cover;border-radius:12px;background:var(--sand)}
+.pl-addr-row{display:flex;gap:10px;align-items:flex-start;margin-top:14px;padding:12px 14px;background:var(--sand);border-radius:12px;color:#3c342d;font-size:1rem;line-height:1.5}
+.pl-addr-row svg{color:var(--red);margin-top:3px}
+.pl-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pl-actions .btn{text-decoration:none;font-size:.88rem}
+.pl-map{display:block;width:100%;height:230px;border:0;border-radius:12px;margin-top:12px;background:var(--sand)}
+@media (max-width:760px){
+  .tryit{padding:18px 14px 16px}
+  .tryit-sub{margin-left:0}
+  .pl-thumb{width:78px;height:62px}
+  .pl-bigimg{height:190px}
+}
+
+/* ЦИТАТА */
+.quote-band{padding:72px 32px;text-align:center}
+.quote-band blockquote{max-width:58ch;margin:0 auto;font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-style:italic;line-height:1.5}
+.quote-band cite{display:block;margin-top:20px;font-style:normal;font-size:.9rem;color:#B6A795}
+
+/* О ПРОЕКТЕ */
+.about-layout{display:grid;grid-template-columns:1.3fr .7fr;gap:46px;align-items:start}
+.about-frame{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:36px 38px;box-shadow:var(--shadow);outline:1.5px dashed rgba(160,49,37,.4);outline-offset:7px}
+.about-text p+p{margin-top:18px}
+.about-text p{color:#3c342d;font-size:1.14rem;font-weight:500;line-height:1.9}
+.about-text strong{color:var(--red);font-weight:700}
+.about-text p:first-of-type::first-letter{font-family:'Playfair Display',serif;font-size:3.6em;float:left;line-height:.78;margin:8px 12px 0 0;color:var(--red);font-weight:700}
+.about-side{background:var(--paper);border:none;box-shadow:var(--shadow-lift);overflow:hidden;padding:0;border-top:5px solid var(--gold);border-radius:14px}
+.about-side h3{background:linear-gradient(120deg,var(--red),var(--red-deep));color:#FFE9C9;padding:18px 26px;margin-bottom:0;font-family:'Playfair Display',serif;font-size:1.4rem}
+.about-side dl{padding:18px 26px 24px;display:grid;grid-template-columns:auto 1fr;gap:12px 16px;font-size:1.08rem}
+.about-side dt{color:var(--muted)}
+.about-side dd{font-weight:500}
+.about-side dt::before{content:'\2726';color:var(--gold);margin-right:7px;font-size:.8em}
+
+/* ФУТЕР */
+.footer{background:#241C18;color:#C8BCAE;padding:0 0 28px}
+.footer .rushnyk{opacity:.6}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px;max-width:1280px;margin:0 auto;padding:46px 32px 0}
+.footer h4{color:#fff;margin-bottom:14px;font-size:.95rem;font-weight:600}
+.footer p{font-size:1rem;color:#A2968A}
+.footer button.flink{background:none;border:none;color:#C8BCAE;display:block;margin-bottom:8px;cursor:pointer;font-size:.92rem;padding:0;text-align:left}
+.footer button.flink:hover{color:var(--gold)}
+.footer-bottom{max-width:1280px;margin:38px auto 0;padding:22px 32px 0;border-top:1px solid #3A302A;font-size:.85rem;color:#8B7F73}
+.footer-bottom .mem{color:var(--gold);display:block;margin-bottom:6px}
+
+/* МОДАЛКИ */
+.modal-overlay{position:fixed;inset:0;background:rgba(28,20,16,.62);backdrop-filter:blur(4px);display:none;justify-content:center;align-items:flex-start;z-index:1000;padding:28px 18px;overflow-y:auto}
+.modal-overlay.active{display:flex}
+.modal{background:var(--paper);border-radius:4px;max-width:800px;width:100%;padding:38px 40px 40px;position:relative;margin:auto;box-shadow:0 30px 70px rgba(20,14,10,.4)}
+.modal.narrow{max-width:440px}
+.modal.wide{max-width:980px}
+.modal-close{position:absolute;top:14px;right:16px;font-size:24px;cursor:pointer;background:var(--sand);border:none;width:36px;height:36px;border-radius:50%;color:#5a5048;line-height:1;transition:.18s}
+.modal-close:hover{background:var(--red);color:#fff}
+.field{width:100%;padding:12px 15px;margin-bottom:14px;border:1.5px solid var(--line);border-radius:9px;font-size:.98rem;background:#fff;transition:border-color .18s;color:var(--ink)}
+.field:focus{outline:none;border-color:var(--red)}
+textarea.field{resize:vertical;min-height:92px}
+label.flabel{font-size:.84rem;font-weight:600;color:#554d46;display:block;margin-bottom:6px}
+input[type=file]{width:100%;padding:10px;border:1.5px dashed var(--line);border-radius:9px;margin-bottom:14px;font-size:.88rem;background:#fff;color:var(--muted)}
+.form-error{background:#FBE9E7;color:#9B2C22;padding:11px 15px;border-radius:9px;font-size:.9rem;margin-bottom:14px;display:none}
+.form-error.show{display:block}
+.dish-hero-img{width:100%;height:290px;object-fit:cover;border-radius:4px;margin:18px 0 20px;background:var(--sand)}
+.modal h2.dtitle{font-size:2rem}
+.dmeta{color:var(--green-dark);font-weight:600;font-size:.88rem;margin-top:6px}
+.history-block{background:var(--sand);border-left:3px solid var(--gold);padding:20px 24px;border-radius:4px;margin:22px 0;color:#4A4038}
+.history-block h3{color:var(--red);margin-bottom:9px;font-size:1.08rem;font-weight:600}
+.history-block p{font-size:1.02rem}
+.keeper-block{display:flex;gap:16px;align-items:center;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:4px;padding:16px 18px;margin:20px 0;cursor:pointer;transition:background .18s}
+.keeper-block:hover{background:var(--sand)}
+.kb-av{width:52px;height:52px;border-radius:50%;flex:none;overflow:hidden;background:linear-gradient(135deg,var(--red),var(--red-deep));color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700}
+.kb-av img{width:100%;height:100%;object-fit:cover}
+.keeper-block .kb-label{font-size:.78rem;color:var(--muted);font-weight:600}
+.keeper-block .kb-name{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--red);font-weight:700}
+.keeper-block .kb-go{margin-left:auto;color:var(--red);font-weight:600;font-size:.86rem;white-space:nowrap}
+.dish-cols{display:grid;grid-template-columns:1fr 1.35fr;gap:30px;margin-top:22px}
+.dish-cols h3{margin-bottom:10px;color:var(--red);font-size:1.08rem;font-weight:600}
+.dish-cols ul,.dish-cols ol{padding-left:20px;line-height:2;color:#4b443e;font-size:1.02rem}
+.kbju{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.kbju span{background:var(--sand);padding:6px 13px;border-radius:999px;font-size:.84rem;font-weight:500;color:#6b5b43}
+.place-item{display:flex;gap:15px;align-items:center;padding:13px 15px;border:1px solid var(--line);border-radius:4px;margin-top:10px}
+.place-item img{width:88px;height:64px;object-fit:cover;border-radius:3px;flex:none;background:var(--sand)}
+.place-item .pname{font-weight:600}
+.place-item .paddr{color:var(--muted);font-size:.87rem;margin-top:2px}
+.subhead{margin-top:30px;margin-bottom:12px;font-size:1.15rem;font-weight:600;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.review,.family-recipe{background:var(--sand);padding:15px 17px;border-radius:4px;margin-top:11px}
+.review .stars{color:var(--gold);letter-spacing:2px}
+.rhead,.frhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:5px;flex-wrap:wrap}
+.ruser,.frname{font-weight:600}
+.rdate,.frdate,.fryears{color:var(--muted);font-size:.8rem}
+.rdel{background:none;border:none;color:#A89B8E;cursor:pointer;font-size:.82rem}
+.rdel:hover{color:var(--red)}
+.review p,.family-recipe p{color:#544c45;font-size:.93rem;margin-top:4px;white-space:pre-line}
+.review img.rimg{max-width:220px;border-radius:8px;margin-top:8px}
+.review-form{margin-top:22px;border-top:1px dashed var(--line);padding-top:20px}
+#starPickerContainer{display:flex;gap:6px;font-size:1.9rem;margin-bottom:12px}
+#starPickerContainer .star{cursor:pointer;line-height:1;color:#ddd;transition:transform .1s}
+#starPickerContainer .star:hover{transform:scale(1.12)}
+#starPickerContainer .star.on{color:var(--gold)}
+.admin-item{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:9px;padding:11px 15px;border:1px solid var(--line);border-radius:4px;flex-wrap:wrap}
+.admin-item b{flex:1;min-width:130px}
+.admin-item .acts{display:flex;gap:8px}
+.acc-head{display:flex;align-items:center;gap:16px;margin-bottom:22px}
+.avatar{width:62px;height:62px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;overflow:hidden;flex:none}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.tab{padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--paper);cursor:pointer;font-weight:600;font-size:.88rem}
+.tab.active{background:var(--red);border-color:var(--red);color:#fff}
+.acc-review{padding:13px 15px;border:1px solid var(--line);border-radius:4px;margin-bottom:9px}
+.acc-review .dish-name{font-weight:700;color:var(--red);cursor:pointer}
+.woman-modal-photo{display:block;width:100%;max-width:340px;aspect-ratio:1/1;height:auto;object-fit:cover;object-position:center top;border:0;border-radius:0;box-shadow:none;margin:10px auto 18px;background:linear-gradient(160deg,var(--red),var(--red-deep))}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(90px);background:#241C18;color:#fff;padding:13px 24px;border-radius:999px;font-size:.93rem;z-index:2000;transition:.3s;opacity:0;box-shadow:0 12px 30px rgba(0,0,0,.3)}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+#toast.err{background:var(--red)}
+#loader{position:fixed;inset:0;background:rgba(250,248,245,.75);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:3000;font-weight:600;color:var(--red);gap:12px}
+#loader.show{display:flex}
+.spin{width:25px;height:25px;border:3px solid var(--line);border-top-color:var(--red);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+@media (max-width:1180px){
+  nav.main a{padding:9px 9px;font-size:.96rem}
+  .logo .lname{font-size:1.6rem}
+}
+@media (max-width:1040px){
+  .hf-grid{grid-template-columns:repeat(2,1fr)}
+  .thread{grid-template-columns:repeat(2,1fr)}
+  .hero-inner{grid-template-columns:1fr;gap:34px;padding-top:52px}
+  .map-layout{grid-template-columns:1fr;gap:32px}
+  .about-layout{grid-template-columns:1fr;gap:28px}
+  .hero-stats .hs-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:760px){
+  .hf-grid{grid-template-columns:1fr}
+  .thread{grid-template-columns:1fr}
+  .hero-feats{padding:0 20px 40px}
+  html{scroll-padding-top:74px}
+  .hwrap{padding:10px 18px}
+  nav.main{display:none}
+  .hwrap{grid-template-columns:1fr auto}
+  .hactions .btn{display:none!important}
+  .burger{display:flex}
+  .section{padding:54px 20px}
+  .hero-inner{padding:40px 20px 0}
+  .hero-stats{padding:0 20px}
+  .family-invite{grid-template-columns:1fr}
+  .dish-cols{grid-template-columns:1fr;gap:22px}
+  .modal{padding:30px 22px 28px}
+  .dish-hero-img{height:210px}
+  .footer-grid{grid-template-columns:1fr;gap:28px}
+  .quote-band{padding:54px 20px}
+}
+
+/* ===== АДАПТИВ: дополнения ===== */
+@media (max-width:760px){
+  .search-box{min-width:0;width:100%;max-width:100%}
+  .dishes-grid{grid-template-columns:1fr;gap:22px}
+  .women-grid{grid-template-columns:1fr}
+  .family-grid{grid-template-columns:1fr}
+  .hf-item .hf-img{height:160px}
+  .woman-photo{margin:14px 14px 0}
+  .family-invite{padding:20px}
+  .about-frame{padding:26px 20px}
+  .region-panel{padding:22px 18px}
+  .marquee-track>span{padding-right:32px;font-size:.82rem}
+  .hero-years{margin:0 -20px 22px;letter-spacing:.1em;font-size:.92rem;padding:11px 0}
+}
+@media (max-width:480px){
+  body{font-size:1.06rem;line-height:1.7}
+  .hwrap{padding:10px 14px;gap:10px}
+  .logo .mark{width:38px;height:38px}
+  .logo .lname{font-size:1.5rem}
+  .logo .lsub{font-size:.68rem;letter-spacing:.16em}
+  .burger{width:38px;height:38px}
+  .hero-inner{padding:30px 16px 0;gap:22px}
+  .hero-years{margin:0 -16px 16px;padding:9px 0;font-size:.82rem;letter-spacing:.08em}
+  .hero h1{font-size:2.15rem}
+  .hero .lead{font-size:1.02rem;margin-top:16px}
+  .hero-feats{padding:0 16px 34px}
+  .hf-label{font-size:1rem}
+  .hf-grid{gap:12px}
+  .hf-item .hf-img{height:135px}
+  .hf-item .hf-body{padding:13px 15px 16px}
+  .hf-item b{font-size:1.08rem;min-height:0}
+  .hf-item .hf-body span{font-size:.9rem;-webkit-line-clamp:2}
+  .hero-stats{margin-top:34px;padding:0 16px}
+  .hs-grid{gap:10px}
+  .hs-item{padding:13px 8px 15px;border-radius:14px}
+  .hs-item::before{font-size:.7rem;top:7px;left:9px}
+  .hs-item b{font-size:1.85rem}
+  .hs-item span{font-size:.8rem;margin-top:4px}
+  .section{padding:44px 16px}
+  .section-head{margin-bottom:28px}
+  .section-head h2{font-size:1.75rem}
+  .section-head h2::after{width:44px;margin-top:9px}
+  .section-head p{font-size:1rem}
+  .thread{gap:14px}
+  .thread-item{padding:20px 18px 18px}
+  .thread-item .year{font-size:1.35rem}
+  .thread-item h3{font-size:1.15rem}
+  .thread-photo img{height:110px}
+  .map-layout{gap:22px}
+  .map-frame{border-width:2px;border-radius:16px}
+  .region-panel h3{font-size:1.45rem}
+  .panel-label{font-size:.95rem}
+  .step-note{font-size:.9rem}
+  .region-tag{padding:7px 13px;font-size:.85rem}
+  .chip{font-size:.85rem;padding:5px 12px 5px 6px}
+  .kc-av{width:28px;height:28px}
+  .dishes-toolbar{padding:14px;gap:10px;margin-bottom:22px;border-radius:13px}
+  .dish-img{height:175px}
+  .dish-body{padding:15px 16px 17px}
+  .dish-body h4{font-size:1.32rem}
+  .dish-body p{font-size:1rem}
+  .women-grid{gap:16px}
+  .woman-photo{margin:12px 12px 0}
+  .woman-body{padding:14px 16px 16px}
+  .wname{font-size:1.22rem}
+  .woman-body p{font-size:.95rem}
+  .woman-war-banner,.woman-modern-banner{padding:16px 14px;border-radius:20px}
+  .family-invite{padding:18px 16px;gap:16px}
+  .family-invite h3{font-size:1.12rem}
+  .family-invite p{font-size:.92rem}
+  .family-invite .btn{width:100%}
+  .family-grid{gap:16px}
+  .family-card .fc-img{height:145px}
+  .family-card .fc-body{padding:15px 16px 16px}
+  .fc-from{font-size:1.2rem}
+  .family-card p{font-size:.95rem;-webkit-line-clamp:6}
+  .quote-band{padding:44px 18px}
+  .quote-band blockquote{font-size:1.22rem}
+  .about-layout{gap:22px}
+  .about-frame{padding:22px 16px;outline-offset:5px}
+  .about-text p{font-size:1.02rem;line-height:1.8}
+  .about-text p:first-of-type::first-letter{font-size:2.8em}
+  .about-side h3{padding:14px 18px;font-size:1.2rem}
+  .about-side dl{padding:14px 18px 18px;font-size:.95rem;gap:8px 12px}
+  .modal{padding:24px 16px 22px;border-radius:14px}
+  .modal h2.dtitle{font-size:1.45rem}
+  .dish-hero-img{height:170px;margin:12px 0 14px}
+  .dish-cols{gap:16px;margin-top:16px}
+  .dish-cols ul,.dish-cols ol{font-size:.95rem;line-height:1.9;padding-left:17px}
+  .history-block{padding:15px 16px;margin:16px 0}
+  .history-block p{font-size:.95rem}
+  .keeper-block{padding:12px 13px;gap:11px}
+  .kb-av{width:42px;height:42px;font-size:1.2rem}
+  .kb-name{font-size:1.05rem}
+  .place-item{padding:10px 12px;gap:11px}
+  .place-item img{width:64px;height:48px}
+  #starPickerContainer{font-size:1.6rem}
+  .woman-modal-photo{max-width:260px}
+  .acc-head{gap:11px;flex-wrap:wrap}
+  .avatar{width:48px;height:48px;font-size:1.3rem}
+  .tabs{gap:6px}
+  .tab{padding:7px 12px;font-size:.8rem}
+  .admin-item{padding:9px 11px;font-size:.88rem;gap:8px}
+  .admin-item .acts{width:100%;justify-content:flex-end}
+  input[type=file]{font-size:.8rem}
+  .footer-grid{padding:34px 18px 0;gap:24px}
+  .footer p{font-size:.92rem}
+  .footer-bottom{padding:16px 18px 0;font-size:.78rem}
+  .btn{padding:9px 16px;font-size:.9rem}
+  #toast{left:12px;right:12px;transform:none;text-align:center;width:auto}
+  #toast.show{transform:none}
+}
+@media (max-width:360px){
+  .hero h1{font-size:1.95rem}
+  .hero .lead{font-size:.97rem}
+  .hs-grid{gap:8px}
+  .hs-item b{font-size:1.6rem}
+  .section-head h2{font-size:1.55rem}
+}
+
+/* ===== ДОП. АНИМАЦИИ ===== */
+html{scroll-behavior:smooth}
+img[data-si]{opacity:0;transform:scale(1.05);transition:opacity .9s ease,transform 1.3s cubic-bezier(.2,.7,.2,1),filter .45s}
+img[data-si].loaded{opacity:1;transform:none}
+.hf-item:hover img[data-si].loaded{transform:scale(1.06)}
+.thread-item:hover img[data-si].loaded,.thread-item.open img[data-si].loaded{transform:scale(1.06)}
+.reveal{opacity:0;transform:translateY(34px) scale(.98);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.reveal.visible{opacity:1;transform:none}
+@keyframes popIn{from{opacity:0;transform:translateY(26px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes modalIn{from{opacity:0;transform:translateY(44px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes squareIn{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:none}}
+.pop{animation:popIn .65s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0s)}
+.modal{animation:modalIn .5s cubic-bezier(.2,.8,.2,1)}
+.modal-overlay.active{animation:fadeIn .3s ease}
+.woman-modal-photo{animation:squareIn .7s .15s cubic-bezier(.2,.8,.2,1) both}
+.dish-card .dish-img,.woman-photo .wp{transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.woman-card:hover .wp{transform:scale(1.08)}
+button:active:not(:disabled){transform:scale(.96)}
+.hero-portrait{transition:transform .25s ease-out;will-change:transform}
+.section-head h2{position:relative}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,img[data-si]{opacity:1;transform:none}}
+
+/* ===== модерация / админка v2 ===== */
+.st-badge{display:inline-block;padding:3px 11px;border-radius:999px;font-size:.74rem;font-weight:700;letter-spacing:.2px;white-space:nowrap}
+.st-pending{background:#FFF1CC;color:#8A6410}
+.st-approved{background:#DDEFE3;color:#2F5A41}
+.st-rejected{background:#FBE0DC;color:#9B2C22}
+.fam-note{padding:12px 16px;border-radius:9px;font-size:.9rem;margin:16px 0}
+.fam-note.pending{background:#FFF6DC;border:1px solid #F0DDA2;color:#7A5A12}
+.fam-note.rejected{background:#FBE9E7;border:1px solid #F1C6C0;color:#8E2A21}
+.fam-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.acc-fam-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.acc-fam-acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.cur-photo{display:flex;align-items:center;gap:12px;margin-bottom:14px;font-size:.88rem;color:var(--muted)}
+.cur-photo img{width:64px;height:48px;object-fit:cover;border-radius:6px}
+.cur-photo label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.nav-badge{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;margin-left:6px;border-radius:999px;background:var(--gold);color:#3b2b05;font-size:.72rem;font-weight:800}
+
+.modal.adm{max-width:1120px;padding:0;overflow:hidden}
+.adm-layout{display:grid;grid-template-columns:220px 1fr;min-height:560px}
+.adm-side{background:#2A211D;color:#E8DCCB;padding:26px 14px;display:flex;flex-direction:column;gap:4px}
+.adm-side h2{font-size:1.15rem;color:#fff;padding:0 12px 14px;margin-bottom:6px;border-bottom:1px solid #43372F}
+.adm-side h2 small{display:block;font-family:inherit;font-size:.74rem;font-weight:400;color:#A99A8A;margin-top:3px}
+.adm-tab{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:11px 12px;border:none;border-radius:8px;background:transparent;color:#D9CCBB;font-size:.93rem;font-weight:500;cursor:pointer;text-align:left;transition:background .15s}
+.adm-tab:hover{background:#3A2E28}
+.adm-tab.active{background:var(--red);color:#fff}
+.adm-tab .cnt{font-size:.78rem;opacity:.7}
+.adm-tab .nav-badge{margin-left:0}
+.adm-main{padding:28px 32px 32px;min-width:0;background:var(--paper)}
+.adm-head h3{font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:2px;padding-right:44px}
+.adm-head p{color:var(--muted);font-size:.9rem;margin-bottom:16px}
+.adm-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.adm-toolbar .field{margin:0;flex:1;min-width:170px;padding:9px 13px}
+.adm-seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.adm-seg button{padding:6px 13px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-size:.82rem;font-weight:600;cursor:pointer;color:#4a423b}
+.adm-seg button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.adm-row{display:flex;align-items:center;gap:14px;padding:11px 14px;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;background:#fff}
+.adm-row:hover{border-color:#d4c3ae}
+.adm-thumb{width:46px;height:46px;border-radius:8px;flex:none;background:var(--sand);color:var(--red);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:1.2rem;overflow:hidden}
+.adm-thumb img{width:100%;height:100%;object-fit:cover}
+.adm-info{flex:1;min-width:0}
+.adm-info b{display:block;font-size:.97rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.adm-info span{display:block;color:var(--muted);font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.adm-acts{display:flex;gap:6px;flex:none}
+.adm-fam{border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:12px;background:#fff}
+.adm-fam.pending{border-left:4px solid var(--gold)}
+.adm-fam.rejected{border-left:4px solid var(--red-soft)}
+.adm-fam.approved{border-left:4px solid var(--green)}
+.adm-fam-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.adm-fam-top b{font-size:1.05rem}
+.adm-fam-meta{color:var(--muted);font-size:.82rem;margin-top:3px}
+.adm-fam-body{display:flex;gap:14px;margin-top:10px}
+.adm-fam-body img{width:96px;height:72px;object-fit:cover;border-radius:6px;flex:none}
+.adm-fam-text{font-size:.92rem;color:#4b443e;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+.adm-fam-text.open{display:block;-webkit-line-clamp:unset}
+.adm-fam-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.adm-reject{display:none;margin-top:12px;gap:8px;flex-wrap:wrap}
+.adm-reject.show{display:flex}
+.adm-reject .field{margin:0;flex:1;min-width:200px;padding:8px 12px}
+.adm-empty{text-align:center;color:var(--muted);padding:42px 10px;border:1px dashed var(--line);border-radius:10px}
+@media (max-width:760px){
+  .adm-layout{grid-template-columns:1fr}
+  .adm-side{flex-direction:row;overflow-x:auto;padding:14px 10px;gap:6px}
+  .adm-side h2{display:none}
+  .adm-tab{width:auto;white-space:nowrap;flex:none;padding:9px 13px}
+  .adm-main{padding:20px 16px 24px}
+  .adm-row{flex-wrap:wrap}
+  .adm-acts{width:100%;justify-content:flex-end}
+  .adm-fam-body{flex-direction:column}
+  .adm-fam-body img{width:100%;height:150px}
+}
+</style>
+
+<base target="_blank">
+</head>
+<body>
+<div id="scrollProgress" aria-hidden="true"></div>
+
+<header>
+  <div class="hwrap">
+    <button class="logo" id="logoBtn" aria-label="Наверх">
+      <svg class="mark" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="22.5" fill="#A03125"/>
+        <circle cx="24" cy="24" r="19.8" fill="none" stroke="#E8B84B" stroke-width="1.4" stroke-dasharray="3.5 3" opacity=".85"/>
+        <path d="M10.5 32.5 c-1.9 -3.6 -1.9 -7.6 0 -11.2 M37.5 32.5 c1.9 -3.6 1.9 -7.6 0 -11.2" stroke="#E8B84B" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".85"/>
+        <path d="M10 30.5 c0 -6 6.3 -10 14 -10 s14 4 14 10 c0 2.6 -2 4.2 -4.6 4.2 h-18.8 c-2.6 0 -4.6 -1.6 -4.6 -4.2 Z" fill="#FAF8F5"/>
+        <path d="M17.5 25.5 l3.2 -2.6 M22.5 24.6 l3.2 -2.6 M27.5 24.6 l3.2 -2.6" stroke="#A03125" stroke-width="1.7" stroke-linecap="round"/>
+        <path d="M20 16.5 c-1.2 -1.5 -1.2 -3 0 -4.6 M24.5 16.5 c-1.2 -1.5 -1.2 -3 0 -4.6 M29 16.5 c-1.2 -1.5 -1.2 -3 0 -4.6" stroke="#E8B84B" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M24 31.5 L26 33.5 L24 35.5 L22 33.5 Z" fill="#E8B84B"/>
+      </svg>
+      <span>
+        <span class="lname">Смачна есці</span>
+        <span class="lsub">смак памяці</span>
+      </span>
+    </button>
+    <nav class="main">
+      <a data-nav="#thread">Нить памяти</a>
+      <a data-nav="#map-section">Карта</a>
+      <a data-nav="#dishes">Блюда</a>
+      <a data-nav="#women">Женщины памяти</a>
+      <a data-nav="#family">Семейные рецепты</a>
+      <a data-nav="#about">О проекте</a>
+    </nav>
+    <div class="hactions">
+      <button class="btn btn-red btn-sm" id="authBtn">Войти</button>
+      <button class="btn btn-green btn-sm" id="accountBtn" style="display:none">Кабинет</button>
+      <button class="btn btn-red btn-sm" id="adminBtn" style="display:none">Админ<span class="nav-badge" style="display:none"></span></button>
+      <button class="btn btn-ghost btn-sm" id="logoutBtn" style="display:none">Выйти</button>
+      <button class="burger" id="burgerBtn" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a data-nav="#thread">Нить памяти</a>
+    <a data-nav="#map-section">Карта</a>
+    <a data-nav="#dishes">Блюда</a>
+    <a data-nav="#women">Женщины памяти</a>
+    <a data-nav="#family">Семейные рецепты</a>
+    <a data-nav="#about">О проекте</a>
+    <div class="mm-actions">
+      <button class="btn btn-red btn-sm" id="authBtnM">Войти</button>
+      <button class="btn btn-green btn-sm" id="accountBtnM" style="display:none">Кабинет</button>
+      <button class="btn btn-red btn-sm" id="adminBtnM" style="display:none">Админ<span class="nav-badge" style="display:none"></span></button>
+      <button class="btn btn-ghost btn-sm" id="logoutBtnM" style="display:none">Выйти</button>
+    </div>
+  </div>
+</header>
+
+<!-- ГЕРО -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-years marquee" aria-label="Год белорусской женщины, 2026">
+        <div class="marquee-track">
+          <span><i class="mq-star">&#10022;</i>&nbsp; Год белорусской женщины · 2026 &nbsp;<i class="mq-star">&#10022;</i>&nbsp; 1941 — 1945 &nbsp;&#183;&nbsp; мы помним &nbsp;&#183;&nbsp; мы храним &nbsp;&#183;&nbsp; мы передаём дальше &nbsp;&#183;&nbsp;</span>
+          <span aria-hidden="true"><i class="mq-star">&#10022;</i>&nbsp; Год белорусской женщины · 2026 &nbsp;<i class="mq-star">&#10022;</i>&nbsp; 1941 — 1945 &nbsp;&#183;&nbsp; мы помним &nbsp;&#183;&nbsp; мы храним &nbsp;&#183;&nbsp; мы передаём дальше &nbsp;&#183;&nbsp;</span>
+        </div>
+      </div>
+      <h1>Пока варится суп,<br><em>память не остывает</em></h1>
+      <p class="lead">Белорусская кухня хранится не в книгах, а в руках. Драники, бабку, кулеш и клёцки передавали от матери к дочери — и в самые страшные годы именно женщины не дали этой цепочке оборваться: <b>готовили в партизанских отрядах, пекли хлеб в подполье, кормили детей в эвакуации и в сожжённых деревнях</b>. Здесь каждое блюдо стоит рядом с именем той, кто его сберегла.</p>
+    </div>
+    <div>
+      <figure class="hero-portrait reveal">
+       <div class="ph-wrap"><video id="heroPortraitVideo" data-sv="cart_glavn" autoplay muted loop playsinline preload="auto" aria-label="Белоруска в национальном костюме"></video></div><figcaption><span class="hp-star">&#10022;</span> Год белорусской женщины · 2026 <span class="hp-star">&#10022;</span></figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="hero-feats">
+    <div class="hf-label">Что вас ждёт на сайте</div>
+    <div class="hf-grid">
+      <button class="hf-item reveal" data-goto="#map-section">
+        <img class="hf-img" data-si="feat_map" alt="Карта шести областей">
+        <span class="hf-body"><b>Карта шести областей</b><span>Нажмите на край — увидите его блюда и историю войны</span></span>
+      </button>
+      <button class="hf-item reveal" data-goto="#dishes">
+        <img class="hf-img" data-si="feat_dishes" alt="Блюда с военной биографией">
+        <span class="hf-body"><b>Блюда с военной биографией</b><span>Рецепт, история 1941–1945 и женщина, которая его сберегла</span></span>
+      </button>
+      <button class="hf-item reveal" data-goto="#women">
+        <img class="hf-img" data-si="feat_women" alt="Женщины памяти">
+        <span class="hf-body"><b>Женщины памяти</b><span>Подпольщицы, пекари и поварихи — с настоящими фотографиями</span></span>
+      </button>
+      <button class="hf-item reveal" data-goto="#family">
+        <img class="hf-img" data-si="feat_family" alt="Семейные рецепты">
+        <span class="hf-body"><b>Ваш семейный рецепт</b><span>Запишите рецепт бабушки — он станет частью общего архива</span></span>
+      </button>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hs-grid">
+      <div class="hs-item"><b id="statDishes">0</b><span>блюд с военной историей</span></div>
+      <div class="hs-item"><b>6</b><span>областей на карте</span></div>
+      <div class="hs-item"><b id="statWomen">0</b><span>сохранённых имён</span></div>
+      <div class="hs-item"><b id="statFamily">0</b><span>семейных рецептов от посетителей</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- НИТЬ ПАМЯТИ -->
+<section id="thread" class="band">
+  <div class="section">
+    <div class="head-split">
+      <div class="section-head">
+        <h2>Нить памяти: как рецепт пережил войну</h2>
+        <p>Проект устроен как одна дорога: от войны — к сохранённому рецепту, от рецепта — к имени женщины, от имени — к вашей собственной семье. Четыре шага ниже объясняют, почему еда здесь говорит о памяти.</p>
+        <div class="thread-open-hint">Наведите курсор на карточку — она подсветится и раскроется. На телефоне нажмите на неё.</div>
+      </div>
+      <figure class="head-pic reveal"><img data-si="thread_head" alt="Нить памяти"></figure>
+    </div>
+    <div class="thread">
+      <div class="thread-item reveal">
+        <div class="year">1941</div>
+        <h3>Кухня уходит в лес</h3>
+        <p>С первых месяцев оккупации женщины уходят в партизанские отряды. Там они становятся поварихами и пекарями: варят в чугунах на кострах, пекут хлеб в вырытых ямах.</p>
+        <div class="thread-detail">
+          <ul class="thread-facts"><li>Пекли в вырытых в земле печах-землянках, замаскированных под кусты.</li><li>Тёрки для драников мастерили из жести и консервных банок.</li><li>На одну повариху порой приходилось до сотни бойцов.</li></ul>
+          <div class="thread-photo"><img data-si="thread_1941" alt="Кухня уходит в лес"></div>
+        </div>
+      </div>
+      <div class="thread-item reveal">
+        <div class="year">1942—1943</div>
+        <h3>Хлеб как оружие</h3>
+        <p>Подпольщицы прячут раненых, передают в отряды муку и сало, держат явки, где еда и разговор шли вместе. За булку хлеба для партизан можно было заплатить жизнью.</p>
+        <div class="thread-detail">
+          <ul class="thread-facts"><li>За ночь пекарни выпекали до 30 булок на несколько отрядов сразу.</li><li>Муку и сало носили в лес тайниками — за пазухой, в корзинах с грибами.</li><li>Конспиративные квартиры были одновременно явками и столовыми.</li></ul>
+          <div class="thread-photo"><img data-si="thread_1942" alt="Хлеб как оружие"></div>
+        </div>
+      </div>
+      <div class="thread-item reveal">
+        <div class="year">1944—1945</div>
+        <h3>Возвращение к столу</h3>
+        <p>После освобождения готовят из того, что уцелело: тыква, картошка, крупа. Продукты собирают всем селом, запекают в чужой печи — своя сгорела. Так рождаются послевоенные варианты старых блюд.</p>
+        <div class="thread-detail">
+          <ul class="thread-facts"><li>Первый послевоенный хлеб пекли в сохранившихся печах соседей.</li><li>Тыква и крупа стали основой послевоенного стола.</li><li>Продукты на общий обед собирали всем селом.</li></ul>
+          <div class="thread-photo"><img data-si="thread_1944" alt="Возвращение к столу"></div>
+        </div>
+      </div>
+      <div class="thread-item reveal">
+        <div class="year">2026</div>
+        <h3>Рецепт у вас дома</h3>
+        <p>Те же драники и бабка стоят сегодня на наших столах. Год белорусской женщины — повод записать рецепт своей бабушки и добавить её историю в этот архив.</p>
+        <div class="thread-detail">
+          <ul class="thread-facts"><li>Запишите рецепт своей бабушки в разделе «Семейные рецепты».</li><li>Оценивайте блюда звёздами и оставляйте отзывы.</li><li>Год белорусской женщины — время записывать и передавать память.</li></ul>
+          <div class="thread-photo"><img data-si="thread_2026" alt="Рецепт у вас дома"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- КАРТА -->
+<section id="map-section" style="background:linear-gradient(180deg,#F7EFE1 0%,#FBF6EC 55%,#FAF8F5 100%)">
+  <div class="section">
+    <div class="section-head">
+      <h2>Шесть областей — шесть кухонь и шесть историй</h2>
+      <p>Нажмите на область карты: вы увидите её блюда и её военную страницу.</p>
+    </div>
+    <div class="map-layout">
+      <div>
+        <div class="map-frame">
+          <img class="map-base" data-si="map_belarus" alt="Карта Беларуси">
+          <svg class="map-overlay" viewBox="0 0 1280 1150" preserveAspectRatio="none" id="belarusOverlay" role="group" aria-label="Области Беларуси">
+            <path data-region="vitebsk" d="M519,337 L509,318 L491,318 L488,302 L472,296 L473,281 L482,272 L480,255 L502,236 L485,225 L467,230 L471,206 L467,189 L480,185 L480,169 L486,163 L484,151 L505,138 L514,115 L533,116 L543,99 L559,101 L572,99 L582,116 L592,124 L601,118 L618,119 L616,102 L624,97 L621,85 L628,74 L636,65 L637,52 L656,42 L669,53 L681,38 L697,38 L711,26 L717,41 L725,52 L734,66 L747,65 L763,72 L764,85 L769,92 L779,88 L791,83 L806,72 L814,77 L829,70 L840,67 L848,72 L856,77 L853,90 L855,97 L857,108 L851,128 L856,141 L866,143 L875,151 L891,137 L903,127 L932,116 L945,124 L960,119 L970,132 L977,149 L994,152 L996,169 L1006,179 L1011,190 L1002,210 L997,223 L1014,229 L1019,247 L1029,263 L1020,282 L1003,296 L1002,310 L1013,318 L1015,325 L1033,327 L1039,341 L1039,357 L1026,360 L1020,368 L993,357 L981,370 L963,369 L946,381 L938,397 L919,399 L908,414 L890,395 L873,412 L873,422 L853,427 L829,448 L816,434 L803,431 L802,404 L787,388 L766,393 L752,408 L729,408 L726,394 L711,385 L694,392 L680,375 L667,381 L657,363 L645,359 L636,361 L628,347 L604,354 L590,336 L572,322 L557,327 L552,340 L536,344 Z"><title>Витебская область</title></path>
+            <path data-region="minsk" d="M527,339 L538,343 L559,334 L567,322 L584,329 L597,349 L613,355 L627,346 L639,360 L654,359 L659,377 L679,381 L690,393 L712,382 L723,395 L732,406 L747,408 L762,393 L772,397 L789,393 L789,403 L802,410 L797,429 L807,437 L817,437 L819,453 L805,474 L810,488 L821,496 L830,513 L820,530 L806,535 L807,547 L807,559 L793,569 L787,581 L780,595 L785,607 L789,619 L798,631 L807,642 L816,651 L799,669 L798,682 L785,696 L777,705 L795,718 L793,732 L802,737 L804,751 L791,759 L780,774 L767,765 L756,770 L743,759 L729,760 L716,764 L703,773 L690,763 L680,764 L665,779 L649,790 L634,790 L637,774 L645,759 L628,744 L618,744 L613,734 L605,722 L588,718 L586,702 L573,702 L559,705 L546,703 L541,712 L531,704 L515,699 L505,678 L490,674 L467,672 L463,656 L446,642 L444,625 L453,616 L444,601 L437,586 L438,569 L448,563 L455,551 L466,546 L460,533 L467,524 L477,517 L477,505 L483,497 L473,486 L470,476 L467,459 L477,453 L481,442 L486,439 L489,418 L475,411 L480,402 L481,389 L491,384 L500,380 L496,366 L503,360 L514,360 L518,347 Z"><title>Минская область</title></path>
+            <path data-region="mogilev" d="M803,480 L815,462 L824,446 L841,441 L853,429 L860,422 L872,426 L881,411 L893,400 L910,416 L920,410 L925,405 L938,404 L944,391 L952,374 L964,375 L976,378 L981,368 L990,364 L1002,361 L1013,365 L1022,370 L1028,361 L1039,353 L1048,364 L1056,363 L1068,367 L1069,379 L1066,391 L1069,402 L1083,409 L1083,422 L1093,426 L1098,437 L1111,437 L1133,428 L1138,437 L1142,448 L1142,460 L1151,465 L1164,469 L1165,485 L1167,496 L1162,506 L1162,518 L1169,519 L1182,526 L1191,516 L1200,515 L1216,506 L1219,528 L1233,535 L1242,546 L1241,559 L1241,570 L1249,575 L1254,585 L1266,596 L1265,611 L1260,628 L1248,641 L1231,646 L1226,659 L1213,664 L1199,679 L1185,679 L1176,694 L1155,702 L1158,713 L1160,722 L1151,736 L1151,749 L1142,758 L1142,767 L1129,764 L1113,771 L1102,765 L1090,765 L1073,758 L1069,763 L1064,772 L1062,784 L1054,799 L1037,799 L1024,790 L1005,796 L994,785 L981,785 L977,770 L965,763 L949,767 L938,756 L936,746 L925,749 L918,735 L902,740 L890,747 L878,730 L865,730 L855,736 L843,731 L823,729 L807,739 L794,731 L797,716 L775,705 L789,688 L798,686 L801,672 L812,663 L815,650 L803,640 L803,631 L794,626 L790,614 L781,602 L784,589 L785,576 L794,567 L805,558 L810,548 L806,536 L822,531 L828,518 L820,505 L821,493 L811,487 Z"><title>Могилёвская область</title></path>
+            <path data-region="grodno" d="M385,324 L385,314 L394,310 L395,298 L405,294 L407,282 L421,271 L430,281 L442,277 L454,285 L458,296 L472,291 L477,300 L485,303 L486,320 L505,318 L510,332 L518,336 L520,343 L514,359 L498,360 L496,373 L488,383 L477,395 L477,408 L486,424 L486,438 L480,445 L466,459 L472,471 L471,486 L482,499 L473,509 L477,517 L462,528 L463,540 L459,553 L449,559 L446,570 L433,576 L440,589 L441,602 L448,607 L445,621 L436,630 L421,639 L413,634 L397,630 L392,620 L381,627 L366,630 L359,639 L337,640 L335,654 L325,660 L314,655 L300,651 L284,654 L272,666 L265,678 L253,674 L244,680 L231,675 L222,675 L210,671 L195,681 L187,692 L184,702 L167,699 L160,713 L141,715 L135,728 L122,728 L107,720 L109,695 L117,691 L114,680 L109,658 L109,641 L92,630 L92,616 L89,603 L79,597 L71,581 L70,567 L75,555 L80,546 L70,543 L68,530 L62,518 L73,515 L73,505 L80,503 L84,494 L73,488 L66,481 L67,467 L73,454 L67,440 L78,431 L89,423 L96,415 L109,416 L111,425 L120,428 L132,424 L143,424 L153,432 L158,414 L166,403 L174,404 L185,412 L192,402 L205,404 L207,386 L214,381 L222,381 L233,366 L241,360 L247,355 L261,354 L273,346 L283,349 L291,338 L296,326 L305,315 L318,309 L324,306 L332,310 L342,311 L351,317 L351,324 L358,332 L364,336 L377,333 Z"><title>Гродненская область</title></path>
+            <path data-region="brest" d="M38,776 L45,769 L55,758 L65,760 L73,751 L91,742 L91,726 L101,726 L114,726 L123,727 L134,729 L144,720 L155,717 L163,714 L169,703 L181,705 L195,691 L202,679 L213,673 L225,678 L234,680 L245,686 L255,676 L271,679 L275,669 L289,656 L300,652 L312,657 L327,657 L334,660 L339,646 L346,639 L361,643 L370,630 L394,625 L405,631 L413,635 L420,640 L429,635 L442,635 L447,645 L456,651 L465,666 L467,673 L476,674 L489,677 L502,681 L509,690 L513,701 L519,701 L536,705 L539,713 L548,707 L556,701 L562,707 L574,706 L586,701 L588,712 L589,720 L593,724 L600,729 L609,724 L612,734 L613,743 L622,747 L634,753 L641,764 L632,781 L637,787 L629,801 L614,814 L619,819 L622,823 L622,831 L632,846 L626,852 L608,862 L602,869 L605,877 L612,881 L615,890 L613,905 L615,914 L620,923 L616,932 L612,936 L612,949 L609,955 L607,968 L614,978 L620,985 L625,997 L619,1011 L621,1027 L632,1035 L626,1054 L619,1063 L608,1058 L599,1065 L594,1057 L581,1047 L576,1058 L567,1068 L550,1066 L543,1049 L537,1060 L527,1061 L524,1043 L515,1031 L501,1025 L485,1031 L474,1036 L469,1026 L454,1013 L439,1011 L429,1018 L421,1030 L402,1022 L389,1010 L373,1011 L361,1009 L347,1016 L341,1006 L337,987 L324,988 L317,977 L299,986 L290,988 L276,995 L267,994 L257,983 L246,988 L236,994 L236,1013 L216,1010 L203,1021 L189,1022 L172,1034 L177,1040 L178,1058 L170,1065 L158,1077 L149,1077 L136,1081 L125,1072 L123,1061 L110,1056 L103,1046 L94,1036 L98,1027 L100,1016 L93,1009 L88,1000 L84,991 L89,978 L89,964 L102,955 L103,941 L111,933 L116,921 L109,914 L98,912 L91,912 L80,904 L85,889 L76,877 L71,861 L58,858 L46,862 L33,862 L21,862 L21,845 L22,833 L35,821 L26,812 L30,803 L39,799 L38,786 Z"><title>Брестская область</title></path>
+            <path data-region="gomel" d="M623,804 L630,795 L636,790 L649,791 L659,784 L669,777 L683,764 L694,764 L699,768 L712,777 L721,761 L738,756 L750,763 L755,774 L768,768 L776,770 L786,776 L791,759 L803,760 L808,743 L823,732 L834,728 L853,740 L871,728 L882,734 L889,748 L903,742 L916,735 L920,740 L926,746 L938,748 L939,763 L949,767 L962,766 L973,764 L975,770 L979,782 L987,782 L996,783 L1008,800 L1024,791 L1033,793 L1047,804 L1056,795 L1058,783 L1063,777 L1076,761 L1087,765 L1101,768 L1119,766 L1137,767 L1142,777 L1145,793 L1150,807 L1163,809 L1173,827 L1170,838 L1174,850 L1187,855 L1198,864 L1204,877 L1216,886 L1223,895 L1214,916 L1221,923 L1210,935 L1210,946 L1198,955 L1191,968 L1180,981 L1182,999 L1168,1008 L1161,1008 L1162,1016 L1164,1022 L1156,1037 L1133,1042 L1133,1056 L1136,1069 L1139,1080 L1147,1084 L1151,1098 L1152,1110 L1143,1121 L1133,1134 L1120,1130 L1110,1123 L1103,1113 L1101,1104 L1092,1107 L1081,1110 L1067,1116 L1051,1107 L1051,1095 L1038,1084 L1024,1084 L1013,1089 L999,1084 L988,1083 L971,1081 L968,1090 L956,1094 L954,1104 L939,1098 L928,1094 L916,1089 L907,1095 L894,1107 L873,1112 L853,1103 L848,1112 L846,1125 L828,1121 L819,1130 L804,1132 L802,1121 L791,1103 L780,1101 L764,1097 L753,1087 L743,1097 L730,1099 L721,1107 L703,1108 L692,1098 L693,1082 L686,1073 L662,1068 L646,1077 L631,1083 L614,1081 L621,1066 L631,1057 L632,1038 L623,1025 L618,1011 L630,996 L622,977 L610,975 L606,959 L613,950 L606,936 L615,936 L622,926 L616,914 L607,908 L615,895 L613,886 L601,874 L607,863 L616,854 L627,853 L631,840 L622,835 L628,827 L616,818 Z"><title>Гомельская область</title></path>
+          </svg>
+        </div>
+      </div>
+      <div class="region-panel">
+        <h3 id="regionName">Вся Беларусь</h3>
+        <p class="rdesc" id="regionDesc">Выберите область — и галерея ниже покажет её блюда, а здесь появится рассказ о том, как здесь жили и готовили в войну.</p>
+        <div class="panel-label">Выберите область</div>
+        <p class="step-note">Нажмите на область на карте или на кнопку ниже: галерея блюд переключится на этот край.</p>
+        <div class="region-tags" id="regionTags"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- БЛЮДА -->
+<section id="dishes" class="band">
+  <div class="section">
+    <div class="section-head">
+      <h2 id="dishesTitle">Блюда, у которых есть военная биография</h2>
+      <p>У каждого рецепта здесь три слоя: как его готовят сегодня, как его готовили в войну и кто его сберёг. Откройте карточку, чтобы прочитать все три.</p>
+    </div>
+    <div class="dishes-toolbar">
+      <div class="search-box">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#A03125" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="searchInput" placeholder="Найти блюдо: драники, бабка, кулеш…" aria-label="Поиск блюда">
+      </div>
+      <span class="count-note" id="dishesCount"></span>
+    </div>
+    <div class="dishes-grid" id="dishesGrid"></div>
+  </div>
+</section>
+
+<!-- ЦИТАТА -->
+<section class="band-dark quote-band">
+  <blockquote>Женщины в отрядах были кухарками, пекарями, прачками — и при этом разведчицами, связистками, санитарками. Они не просто кормили: они возвращали бойцам ощущение дома.</blockquote>
+  <cite>Из воспоминаний о партизанском быте Беларуси</cite>
+</section>
+
+<!-- ЖЕНЩИНЫ -->
+<section id="women">
+  <div class="section">
+    <div class="section-head">
+      <h2>Женщины памяти: женское лицо Победы</h2>
+      <p>Подпольщицы, партизанские пекари и поварихи, матери, чьи рецепты записали дети. Рядом с каждой историей — блюда проекта, которые с ней связаны. Их дело сегодня продолжают белорусские хозяйки и повара.</p>
+    </div>
+    <div class="women-grid" id="womenGrid"></div>
+  </div>
+</section>
+
+<!-- СЕМЕЙНЫЕ РЕЦЕПТЫ -->
+<section id="family" class="band">
+  <div class="section">
+    <div class="head-split">
+      <div class="section-head">
+        <h2>Семейные рецепты: продолжите архив</h2>
+        <p>Эта часть сайта пишется не нами. Здесь посетители сохраняют рецепты своих бабушек и прабабушек — вместе с именем, годами жизни и историей, которая стоит за блюдом.</p>
+      </div>
+      <figure class="head-pic reveal"><img data-si="family_head" alt="Семейные рецепты"></figure>
+    </div>
+    <div class="family-invite">
+      <div>
+        <h3>Запишите рецепт своей бабушки</h3>
+        <p>Расскажите, что и как готовили в вашей семье и что вы знаете об этом человеке. Можно приложить старую фотографию, снимок рукописной карточки рецепта или самого блюда. Рецепт появится на сайте после проверки администратором.</p>
+      </div>
+      <button class="btn btn-red" id="openFamilyFormBtn">Добавить рецепт</button>
+    </div>
+    <div class="family-grid" id="familyGrid"></div>
+  </div>
+</section>
+
+<!-- О ПРОЕКТЕ -->
+<section id="about" style="background:linear-gradient(180deg,#F8F2E8,#FFFDF8);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="section">
+    <div class="section-head">
+      <h2 style="font-size:clamp(2.2rem,4vw,3rem)">О проекте</h2>
+      <p style="font-size:1.1rem;max-width:70ch">Почему белорусская кухня — это память, и почему именно женщины её сохранили.</p>
+    </div>
+    <div class="about-layout">
+      <div class="about-text about-frame">
+        <p>Белорусская кухня — это живая память народа. Рецепты драников, бабки и кулеша передавались от матери к дочери, от бабушки к внучке, без единой записи. В годы Великой Отечественной войны эту цепочку могла оборвать любая ночь — и всё-таки она не оборвалась, потому что рядом с каждой печью, каждым костром и каждым чугуном стояла женщина.</p>
+        <p>Мы собрали шесть областей, шесть блюд и истории женщин, которые готовили в партизанских отрядах, пекли хлеб в подполье и кормили семьи в первые послевоенные годы. Рядом с ними — раздел, который наполняют посетители: их собственные семейные рецепты. Так архив продолжает расти.</p>
+        <p>2026 год объявлен <strong>Годом белорусской женщины</strong>. Проект создан к <strong>81-й годовщине освобождения Республики Беларусь</strong> от немецко-фашистских захватчиков. Мы помним. Мы храним. Мы передаём дальше.</p>
+      </div>
+      <div>
+        <aside class="about-side">
+          <h3>Карточка проекта</h3>
+          <dl>
+            <dt>Конкурс</dt><dd>«ПАТРИОТ.by», областной этап</dd>
+            <dt>Номинация</dt><dd><span class="nom-highlight">«Связь поколений: мы помним»</span></dd>
+            <dt>Авторы</dt><dd>Гречко А. С., Емельяненко Ю. И.</dd>
+            <dt>Год</dt><dd>2026</dd>
+          </dl>
+        </aside>
+        <aside class="memo-card" style="margin-top:26px">
+          <div class="rushnyk"></div>
+          <div class="mc-body">
+            <span class="candle">&#128367;</span>
+            <h2>Кому посвящён проект</h2>
+            <p>Белорусским женщинам — партизанским поварихам и пекарям, подпольщицам, матерям и бабушкам, чьи рецепты пережили войну и дошли до наших столов.</p>
+            <p class="mc-ded">Году белорусской женщины (2026) и 81-й годовщине освобождения Беларуси от немецко-фашистских захватчиков.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="rushnyk"></div>
+  <div class="footer-grid">
+    <div>
+      <h4>Смачна есці — смак памяці</h4>
+      <p>Интерактивный гид по традиционной белорусской кухне и память о женщинах, которые сохранили её в годы войны.</p>
+    </div>
+    <div>
+      <h4>Области</h4>
+      <button class="flink" data-region-link="minsk">Минская</button>
+      <button class="flink" data-region-link="brest">Брестская</button>
+      <button class="flink" data-region-link="grodno">Гродненская</button>
+      <button class="flink" data-region-link="vitebsk">Витебская</button>
+      <button class="flink" data-region-link="mogilev">Могилёвская</button>
+      <button class="flink" data-region-link="gomel">Гомельская</button>
+    </div>
+    <div>
+      <h4>Разделы</h4>
+      <button class="flink" data-nav="#thread">Нить памяти</button>
+      <button class="flink" data-nav="#women">Женщины памяти</button>
+      <button class="flink" data-nav="#family">Семейные рецепты</button>
+      <button class="flink" data-nav="#about">О проекте</button>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="mem">&#128367; Проект посвящён памяти белорусских женщин — хранительниц кулинарных традиций.</span>
+    Создан к 81-й годовщине освобождения Беларуси от немецко-фашистских захватчиков. © 2026 «Смачна есці».
+  </div>
+</footer>
+
+<!-- АВТОРИЗАЦИЯ -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal narrow">
+    <button class="modal-close" data-close="authModal" aria-label="Закрыть">&times;</button>
+    <h2 id="authTitle" style="margin-bottom:8px">Регистрация</h2>
+    <p style="color:var(--muted);font-size:.9rem;margin-bottom:18px">Аккаунт нужен, чтобы оставлять отзывы и добавлять семейные рецепты.</p>
+    <div class="form-error" id="authError"></div>
+    <div id="authNameWrap"><label class="flabel" for="authName">Имя</label><input class="field" id="authName" placeholder="Как к вам обращаться"></div>
+    <label class="flabel" for="authEmail">Email</label><input class="field" id="authEmail" type="email" placeholder="you@example.com">
+    <label class="flabel" for="authPassword">Пароль</label><input class="field" id="authPassword" type="password" placeholder="Минимум 4 символа">
+    <button class="btn btn-red" id="authSubmitBtn" style="width:100%">Зарегистрироваться</button>
+    <p style="text-align:center;margin-top:16px;font-size:.92rem">
+      <a href="#" id="authToggleLink" style="color:var(--red)">Уже есть аккаунт? Войти</a>
+    </p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="dishModal"><div class="modal"><button class="modal-close" data-close="dishModal" aria-label="Закрыть">&times;</button><div id="modalContent"></div></div></div>
+<div class="modal-overlay" id="familyViewModal"><div class="modal"><button class="modal-close" data-close="familyViewModal" aria-label="Закрыть">&times;</button><div id="familyViewContent"></div></div></div>
+<div class="modal-overlay" id="familyFormModal">
+  <div class="modal">
+    <button class="modal-close" data-close="familyFormModal" aria-label="Закрыть">&times;</button>
+    <h2 style="margin-bottom:8px" id="ffTitle">Семейный рецепт</h2>
+    <p style="color:var(--muted);font-size:.9rem;margin-bottom:18px" id="ffNote">Перед публикацией рецепт проверяет администратор. После одобрения он появится в разделе «Семейные рецепты» рядом с вашим именем.</p>
+    <div class="form-error" id="familyFormError"></div>
+    <label class="flabel" for="ffDish">К какому блюду относится рецепт</label>
+    <select class="field" id="ffDish"></select>
+    <label class="flabel" for="ffFrom">От кого рецепт</label>
+    <input class="field" id="ffFrom" placeholder="Например: моя бабушка Анна Петровна">
+    <label class="flabel" for="ffYears">Годы жизни</label>
+    <input class="field" id="ffYears" placeholder="Например: 1912–1985">
+    <label class="flabel" for="ffText">Рецепт и история</label>
+    <textarea class="field" id="ffText" style="min-height:160px" placeholder="Как готовили это блюдо в вашей семье, из чего, по какому поводу и что вы знаете об этом человеке"></textarea>
+    <label class="flabel" for="ffImage">Фотография (по желанию)</label>
+    <div class="cur-photo" id="ffCurPhoto" style="display:none"><img id="ffCurImg" alt=""><label><input type="checkbox" id="ffRemoveImg"> Удалить текущее фото</label></div>
+    <input type="file" id="ffImage" accept="image/*">
+    <button class="btn btn-red" id="ffSubmit" style="width:100%">Отправить на проверку</button>
+  </div>
+</div>
+<div class="modal-overlay" id="womanModal"><div class="modal"><button class="modal-close" data-close="womanModal" aria-label="Закрыть">&times;</button><div id="womanContent"></div></div></div>
+<div class="modal-overlay" id="accountModal">
+  <div class="modal">
+    <button class="modal-close" data-close="accountModal" aria-label="Закрыть">&times;</button>
+    <div class="acc-head">
+      <div class="avatar" id="accAvatar">?</div>
+      <div>
+        <h2 id="accName" style="font-size:1.4rem"></h2>
+        <div style="color:var(--muted);font-size:.9rem" id="accEmail"></div>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="editProfileBtn" style="margin-left:auto">Изменить профиль</button>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="myreviews">Мои отзывы</button>
+      <button class="tab" data-tab="favs">Избранное</button>
+      <button class="tab" data-tab="myrecipes">Мои рецепты</button>
+    </div>
+    <div id="accContent"></div>
+  </div>
+</div>
+
+<!-- АДМИНКА -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal adm">
+    <button class="modal-close" data-close="adminModal" aria-label="Закрыть">&times;</button>
+    <div class="adm-layout">
+      <nav class="adm-side" id="admNav"></nav>
+      <div class="adm-main">
+        <div class="adm-head"><h3 id="admTitle"></h3><p id="admSub"></p></div>
+        <div class="adm-toolbar">
+          <input class="field" id="admSearch" placeholder="Поиск...">
+          <button class="btn btn-green btn-sm" id="admAddBtn" style="display:none"></button>
+        </div>
+        <div class="adm-seg" id="admFilters" style="display:none"></div>
+        <div id="admList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ФОРМА БЛЮДА -->
+<div class="modal-overlay" id="dishFormModal">
+  <div class="modal">
+    <button class="modal-close" data-close="dishFormModal" aria-label="Закрыть">&times;</button>
+    <h2 id="dishFormTitle" style="margin-bottom:18px">Добавить блюдо</h2>
+    <div class="form-error" id="dishFormError"></div>
+    <label class="flabel">Название</label><input class="field" id="fTitle">
+    <label class="flabel">Подзаголовок</label><input class="field" id="fSubtitle">
+    <label class="flabel">Область</label>
+    <select class="field" id="fRegion">
+      <option value="minsk">Минская область</option>
+      <option value="brest">Брестская область</option>
+      <option value="grodno">Гродненская область</option>
+      <option value="vitebsk">Витебская область</option>
+      <option value="mogilev">Могилёвская область</option>
+      <option value="gomel">Гомельская область</option>
+    </select>
+    <label class="flabel">Хранительница (чья история рядом)</label>
+    <select class="field" id="fWoman"></select>
+    <label class="flabel">URL картинки</label><input class="field" id="fImage" placeholder="https://…">
+    <label class="flabel">Или фото с компьютера</label>
+    <input type="file" id="dishImageFile" accept="image/*">
+    <label class="flabel">Калорийность</label><input class="field" id="fCalories" placeholder="например, 320 ккал">
+    <label class="flabel">Белки</label><input class="field" id="fProtein">
+    <label class="flabel">Жиры</label><input class="field" id="fFat">
+    <label class="flabel">Углеводы</label><input class="field" id="fCarbs">
+    <label class="flabel">Описание</label><textarea class="field" id="fDescription"></textarea>
+    <label class="flabel">Как готовили в войну</label><textarea class="field" id="fHistory" style="min-height:110px"></textarea>
+    <label class="flabel">Ингредиенты (каждый с новой строки)</label><textarea class="field" id="fIngredients"></textarea>
+    <label class="flabel">Шаги рецепта (каждый с новой строки)</label><textarea class="field" id="fRecipe"></textarea>
+    <button class="btn btn-red" id="saveDishBtn" style="width:100%">Сохранить</button>
+  </div>
+</div>
+
+<!-- ФОРМА ХРАНИТЕЛЬНИЦЫ -->
+<div class="modal-overlay" id="womanFormModal">
+  <div class="modal">
+    <button class="modal-close" data-close="womanFormModal" aria-label="Закрыть">&times;</button>
+    <h2 id="womanFormTitle" style="margin-bottom:18px">Добавить хранительницу</h2>
+    <div class="form-error" id="womanFormError"></div>
+
+    <label class="flabel">Имя</label>
+    <input class="field" id="fwName" placeholder="Например: Анна Петровна Сидорова">
+
+    <label class="flabel">Годы жизни</label>
+    <input class="field" id="fwYears" placeholder="1912–1985">
+
+    <label class="flabel">Область</label>
+    <select class="field" id="fwRegion">
+      <option value="minsk">Минская область</option>
+      <option value="brest">Брестская область</option>
+      <option value="grodno">Гродненская область</option>
+      <option value="vitebsk">Витебская область</option>
+      <option value="mogilev">Могилёвская область</option>
+      <option value="gomel">Гомельская область</option>
+    </select>
+
+    <label class="flabel">Роль</label>
+    <input class="field" id="fwRole" placeholder="Например: партизанская повариха">
+
+    <label class="flabel">Короткое описание (для карточки)</label>
+    <textarea class="field" id="fwShort" style="min-height:70px"></textarea>
+
+    <label class="flabel">Полная история (для модалки)</label>
+    <textarea class="field" id="fwHistory" style="min-height:140px"></textarea>
+
+    <label class="flabel">Фото — URL</label>
+    <input class="field" id="fwPhoto" placeholder="https://…">
+
+    <label class="flabel">Или фото с компьютера</label>
+    <input type="file" id="fwPhotoFile" accept="image/*">
+
+    <label class="flabel" style="display:flex;align-items:center;gap:9px;cursor:pointer">
+      <input type="checkbox" id="fwModern"> Современная продолжательница
+    </label>
+
+    <button class="btn btn-red" id="saveWomanBtn" style="width:100%;margin-top:16px">Сохранить</button>
+  </div>
+</div>
+
+<!-- ФОРМА ЗАВЕДЕНИЯ -->
+<div class="modal-overlay" id="placeFormModal">
+  <div class="modal narrow">
+    <button class="modal-close" data-close="placeFormModal" aria-label="Закрыть">&times;</button>
+    <h2 id="placeFormTitle" style="margin-bottom:18px">Добавить заведение</h2>
+    <div class="form-error" id="placeFormError"></div>
+    <label class="flabel">Название</label><input class="field" id="fpName">
+    <label class="flabel">Адрес</label><input class="field" id="fpAddress">
+    <label class="flabel">Блюда, которые здесь подают <span id="fpDishCount" style="color:var(--muted);font-weight:400"></span></label>
+    <input class="field" id="fpDishSearch" placeholder="Найти блюдо…" autocomplete="off" style="margin-bottom:8px">
+    <div class="dish-check-list" id="fpDishList"></div>
+    <label class="flabel">Фото заведения</label>
+    <input type="file" id="fpImage" accept="image/*">
+    <button class="btn btn-red" id="savePlaceBtn" style="width:100%">Сохранить</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="profileEditModal">
+  <div class="modal narrow">
+    <button class="modal-close" data-close="profileEditModal" aria-label="Закрыть">&times;</button>
+    <h2 style="margin-bottom:18px">Профиль</h2>
+    <div class="form-error" id="profileError"></div>
+    <div style="text-align:center;margin-bottom:14px">
+      <img id="peAvatarPreview" alt="" style="width:92px;height:92px;border-radius:50%;object-fit:cover;display:none;margin:0 auto 10px;border:3px solid var(--line)">
+    </div>
+    <label class="flabel">Фото профиля</label>
+    <input type="file" id="peAvatarFile" accept="image/*">
+    <label class="flabel">Имя</label><input class="field" id="peName">
+    <label class="flabel">О себе</label><textarea class="field" id="peBio"></textarea>
+    <button class="btn btn-red" id="saveProfileBtn" style="width:100%">Сохранить</button>
+  </div>
+</div>
+
+<div id="toast" role="status"></div>
+<div id="loader"><div class="spin"></div>Загрузка…</div>
+
+<script>
+/* ============================================================
+   ПОДКЛЮЧЕНИЕ К БАЗЕ ДАННЫХ (Supabase)
+   ============================================================ */
+const SUPABASE_URL = 'https://cfzdvjsnomqwcivaulvo.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_T0fAcLovvvu-9WaprClCOQ_USJckpYh';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const REGIONS = {
+  minsk:   {name:'Минская область',    desc:'Сердце Беларуси. Здесь в оккупацию работали крупнейшие партизанские зоны «Полесская Сечь» и «Минская земля»: тысячи женщин готовили и пекли для десятков отрядов.'},
+  brest:   {name:'Брестская область',  desc:'Первый удар войны принял Брест. Женщины Брестчины пекли хлеб в подполье, кормили раненых в лесных бригадах и прятали детей в блиндажах.'},
+  grodno:  {name:'Гродненская область',desc:'Западный рубеж. Здесь еда войны пахла рожью и маком: женщины прятали муку от реквизиций и пекли для семей и для лесных отрядов.'},
+  vitebsk: {name:'Витебская область',  desc:'Витебщина — земля партизанских республик. Женщины варили в чугунах на кострах в лесу и таскали продукты к отрядам через весь фронт боёв.'},
+  mogilev: {name:'Могилёвская область',desc:'«Могилёвская земля» — одна из самых больших партизанских зон. Здесь женщины держали явочные квартиры, где обед и конспирация шли рука об руку.'},
+  gomel:   {name:'Гомельская область', desc:'Гомельщина помнит спалённые деревни. Женщины этих краёв после освобождения собирали урожай всем миром и первыми пекли хлеб в сохранившихся печах.'}
+};
+
+const state = {
+  user: null,
+  dishes: [], women: [], family: [], places: [], reviews: [], images: {},
+  favs: new Set(), region: 'all', search: '',
+  editDishId: null, editWomanId: null, editFamId: null
+};
+
+/* ---------- утилиты ---------- */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const initials = name => String(name||'?').trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const fmtDate = iso => { try { return new Date(iso).toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'}); } catch(e){ return ''; } };
+const starsStr = r => '★★★★★'.slice(0, Math.round(r)) + '☆☆☆☆☆'.slice(0, 5 - Math.round(r));
+const avgRating = dishId => { const r = state.reviews.filter(x=>x.dish_id===dishId); return r.length ? r.reduce((a,b)=>a+b.rating,0)/r.length : 0; };
+const isApproved = f => !f.status || f.status==='approved';
+const famStatus = f => f.status || 'approved';
+const FAM_ST = {pending:'На проверке', approved:'Опубликован', rejected:'Отклонён'};
+const famById = id => state.family.find(x=>String(x.id)===String(id));
+const approvedFamily = () => state.family.filter(isApproved);
+const pendingCount = () => state.family.filter(f=>famStatus(f)==='pending').length;
+const isAdmin = () => !!(state.user && state.user.role==='admin');
+const canEditFam = f => !!(state.user && f && (String(state.user.id)===String(f.user_id) || isAdmin()));
+const womanById = id => state.women.find(w=>w.id===id);
+const dishById = id => state.dishes.find(d=>d.id===id);
+const phSvg = (t,c1,c2) => 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="640" height="420" fill="url(#g)"/><text x="320" y="215" text-anchor="middle" font-family="serif" font-size="34" fill="rgba(255,255,255,.9)" font-weight="bold">${t}</text></svg>`);
+
+function toast(msg, isErr){
+  const t = $('#toast'); t.textContent = msg; t.className = isErr ? 'show err' : 'show';
+  clearTimeout(t._tm); t._tm = setTimeout(()=> t.className='', 2600);
+}
+function loader(on){ $('#loader').classList.toggle('show', !!on); }
+function showErr(id,msg){ const e=$(id); e.textContent=msg; e.classList.add('show'); }
+function clearErr(id){ $(id).classList.remove('show'); }
+function openModal(id){ $('#'+id).classList.add('active'); document.body.style.overflow='hidden'; }
+function closeModal(id){ $('#'+id).classList.remove('active'); document.body.style.overflow=''; }
+async function readFileB64(input){
+  // Имя сохранено для совместимости. Теперь файл уходит в Storage (бакет images), в базу пишется короткая ссылка.
+  const f=input.files&&input.files[0]; if(!f) return null;
+  try{
+    const ext=((f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,5))||'jpg';
+    const path='uploads/'+Date.now()+'_'+Math.random().toString(36).slice(2,8)+'.'+ext;
+    const {error}=await sb.storage.from('images').upload(path,f,{contentType:f.type||undefined,cacheControl:'31536000'});
+    if(error) throw error;
+    return sb.storage.from('images').getPublicUrl(path).data.publicUrl;
+  }catch(e){
+    console.warn('Storage: не удалось загрузить, сохраняю как base64:',e);
+    return await new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(f); });
+  }
+}
+function scrollToSel(sel){ const el=$(sel); if(el) el.scrollIntoView({behavior:'smooth'}); }
+
+/* ---------- загрузка данных ---------- */
+const _sleep=ms=>new Promise(r=>setTimeout(r,ms));
+// у заведения может быть несколько блюд: колонка dish_ids (jsonb-массив); старая dish_id тоже учитывается
+function placeDishIds(p){
+  let a=p&&p.dish_ids;
+  if(typeof a==='string'){ try{ a=JSON.parse(a); }catch(e){ a=null; } }
+  if(Array.isArray(a) && a.length) return a.map(String);
+  return (p && p.dish_id!=null && p.dish_id!=='') ? [String(p.dish_id)] : [];
+}
+const placeHasDish=(p,dishId)=>placeDishIds(p).includes(String(dishId));
+// Загрузка таблицы: 3 попытки; если таблица «тяжёлая» и не отдаётся — грузим без картинок, картинки подтягиваем потом по одной.
+async function fetchTable(name, orderCol, asc, light){
+  let lastErr=null;
+  // «лёгкий» режим сразу: текст приходит мгновенно, тяжёлые фото догружаются отдельно и параллельно
+  if(light && light.first){
+    let q=sb.from(name).select(light.cols); if(orderCol) q=q.order(orderCol,{ascending:asc});
+    const {data,error}=await q;
+    if(!error) return {data:data||[], light:true};
+    console.warn('Supabase «'+name+'» (лёгкий запрос):',error.message);
+  }
+  for(let i=0;i<3;i++){
+    let q=sb.from(name).select('*'); if(orderCol) q=q.order(orderCol,{ascending:asc});
+    const {data,error}=await q;
+    if(!error) return {data:data||[]};
+    lastErr=error; console.warn('Supabase «'+name+'», попытка '+(i+1)+':',error.message);
+    await _sleep(700*(i+1));
+  }
+  if(light){
+    let q=sb.from(name).select(light.cols); if(orderCol) q=q.order(orderCol,{ascending:asc});
+    const {data,error}=await q;
+    if(!error) return {data:data||[], light:true};
+    lastErr=error;
+  }
+  console.error('Supabase «'+name+'»:',lastErr);
+  return {data:null,error:lastErr};
+}
+/* ---------- кэш фото блюд (IndexedDB): при повторном заходе фото видны сразу ---------- */
+const imgCache=(()=>{
+  let dbp=null;
+  const open=()=>dbp||(dbp=new Promise(res=>{
+    try{
+      const r=indexedDB.open('smachna_cache',1);
+      r.onupgradeneeded=()=>r.result.createObjectStore('dish_img');
+      r.onsuccess=()=>res(r.result); r.onerror=()=>res(null);
+    }catch(e){ res(null); }
+  }));
+  return {
+    async all(){
+      const db=await open(); if(!db) return {};
+      return new Promise(res=>{
+        const out={}, st=db.transaction('dish_img').objectStore('dish_img'), c=st.openCursor();
+        c.onsuccess=()=>{ const cur=c.result; if(cur){ out[cur.key]=cur.value; cur.continue(); } else res(out); };
+        c.onerror=()=>res(out);
+      });
+    },
+    async set(id,val){ const db=await open(); if(!db) return; try{ db.transaction('dish_img','readwrite').objectStore('dish_img').put(val,String(id)); }catch(e){} },
+    async del(id){ const db=await open(); if(!db) return; try{ db.transaction('dish_img','readwrite').objectStore('dish_img').delete(String(id)); }catch(e){} }
+  };
+})();
+
+// ставит фото в уже нарисованную карточку, не перерисовывая сетку
+function applyDishImage(d){
+  if(!d.image) return;
+  $$('img.dish-img[data-id="'+d.id+'"]').forEach(el=>{
+    if(el.dataset.src===d.image) return;
+    const t=new Image();
+    t.onload=()=>{ el.src=d.image; el.dataset.src=d.image; };
+    t.src=d.image;
+  });
+}
+// фото блюд грузятся параллельно (по 5 запросов сразу), а не по одному
+// Фото, которые лежат в Storage (короткие ссылки http…), приходят ОДНИМ быстрым запросом вместе с текстом.
+// Здесь догружаются только «тяжёлые» фото (base64 прямо в базе) — по одному, 6 запросов параллельно, 3 попытки.
+async function loadDishImages(){
+  const pending=state.dishes.filter(d=>!d._urlDone);
+  // сначала блюда вообще без фото, потом — обновление тех, что уже показаны из кэша
+  pending.sort((a,b)=>(a.image?1:0)-(b.image?1:0));
+  const POOL=6; let next=0;
+  const one=async d=>{
+    for(let a=0;a<3;a++){
+      try{
+        const r=await sb.from('dishes').select('id,image').eq('id',d.id).maybeSingle();
+        if(!r.error){
+          const img=r.data && r.data.image;
+          if(img){ if(d.image!==img){ d.image=img; imgCache.set(d.id,img); applyDishImage(d); } }
+          else if(d.image){ d.image=null; imgCache.del(d.id); }
+          return;
+        }
+      }catch(e){}
+      await _sleep(350*(a+1));
+    }
+  };
+  const worker=async()=>{ while(next<pending.length) await one(pending[next++]); };
+  await Promise.all(Array.from({length:Math.min(POOL,pending.length)},worker));
+}
+// Одноразовое «лечение»: админ заходит на сайт — тяжёлые base64-фото переезжают в Storage, в базе остаются короткие ссылки.
+// После этого все фото блюд приходят мгновенно и больше не «зависают».
+async function migrateBase64Images(){
+  if(!isAdmin() || window._migrating) return;
+  window._migrating=true;
+  const up=async dataUrl=>{
+    const blob=await (await fetch(dataUrl)).blob();
+    const ext=((blob.type.split('/')[1]||'jpg').replace(/[^a-z0-9]/g,'').slice(0,5))||'jpg';
+    const path='uploads/'+Date.now()+'_'+Math.random().toString(36).slice(2,8)+'.'+ext;
+    const {error}=await sb.storage.from('images').upload(path,blob,{contentType:blob.type||undefined,cacheControl:'31536000'});
+    if(error) throw error;
+    return sb.storage.from('images').getPublicUrl(path).data.publicUrl;
+  };
+  const jobs=[['dishes','image',state.dishes],['women','photo',state.women],['family_recipes','image_url',state.family],['places','image',state.places]];
+  let n=0;
+  for(const [table,col,list] of jobs){
+    for(const row of list){
+      const v=row[col];
+      if(typeof v!=='string' || !v.startsWith('data:')) continue;
+      try{
+        const url=await up(v);
+        const {error}=await sb.from(table).update({[col]:url}).eq('id',row.id);
+        if(error) throw error;
+        row[col]=url; n++;
+        if(table==='dishes') imgCache.set(row.id,url);
+      }catch(e){ console.warn('Миграция фото не удалась ('+table+' '+row.id+'):',e); }
+    }
+  }
+  window._migrating=false;
+  if(n) toast('Фото оптимизированы: '+n+' шт. Сайт теперь грузится быстрее');
+}
+async function fillImagesLater(name, imgCol, list, rerender){
+  for(const row of list){
+    try{
+      const {data}=await sb.from(name).select(imgCol).eq('id',row.id).maybeSingle();
+      if(data && data[imgCol]){ row[imgCol]=data[imgCol]; rerender(); }
+    }catch(e){ /* пропускаем */ }
+  }
+}
+async function loadAll(){
+  loader(true);
+  const specs=[
+    ['dishes','created_at',true,{cols:'id,title,subtitle,region,woman_id,keeper,calories,protein,fat,carbs,description,history,ingredients,recipe,created_at',img:'image',first:true}],
+    ['women','created_at',true,{cols:'id,name,years,region,role,short,history,modern,created_at',img:'photo'}],
+    ['family_recipes','created_at',false,{cols:'id,dish_id,dish_name,from_name,years,text,user_name,user_id,status,reject_reason,created_at',img:'image_url'}],
+    ['places','created_at',true,{cols:'id,name,address,dish_id,dish_ids,created_at',img:'image'}],
+    ['reviews','created_at',false,null],
+    ['site_images',null,true,null]
+  ];
+  try {
+    // параллельно с текстом: все фото-ссылки блюд (короткие, http…) одним запросом
+    const urlImgsP = sb.from('dishes').select('id,image').like('image','http%').then(r=>r.data||[], ()=>[]);
+    const cachedP = imgCache.all();
+    const [res, urlImgs, cached0] = await Promise.all([
+      Promise.all(specs.map(sp=>fetchTable(sp[0],sp[1],sp[2],sp[3]))),
+      urlImgsP, cachedP
+    ]);
+    const failed=[];
+    res.forEach((r,i)=>{ if(r.error) failed.push(specs[i][0]); });
+    if(failed.length) toast('Не загрузилось: '+failed.join(', ')+'. Проверьте консоль (F12).', true);
+    const keep=(r,old)=> r.data ?? old;   // при ошибке не затираем уже загруженное
+    state.dishes = keep(res[0],state.dishes);
+    if(res[0].light){
+      const urlMap={}; urlImgs.forEach(x=>{ urlMap[x.id]=x.image; });
+      state.dishes.forEach(d=>{
+        if(urlMap[d.id]){ d.image=urlMap[d.id]; d._urlDone=true; imgCache.set(d.id,d.image); }
+        else if(!d.image && cached0[d.id]) d.image=cached0[d.id];
+      });
+    }
+    state.women  = keep(res[1],state.women);
+    state.family = keep(res[2],state.family);
+    state.places = keep(res[3],state.places);
+    state.reviews= keep(res[4],state.reviews);
+    (res[5].data||[]).forEach(x=> state.images[x.key]=x.url);
+    await restoreSession();
+    window._lateImages=[
+      res[0].light && (()=>loadDishImages()),
+      res[1].light && (()=>fillImagesLater('women','photo',state.women,()=>{ renderWomen(); renderRegionPanel(); })),
+      res[2].light && (()=>fillImagesLater('family_recipes','image_url',state.family,()=>renderFamily())),
+      res[3].light && (()=>fillImagesLater('places','image',state.places,()=>{}))
+    ].filter(Boolean);
+  } catch(e){ console.error(e); toast('Ошибка загрузки данных', true); }
+  renderAll();
+  loader(false);
+  Promise.all((window._lateImages||[]).map(fn=>fn())).then(()=>migrateBase64Images()).catch(()=>{});
+}
+
+async function restoreSession(){
+  const uid = localStorage.getItem('se_user_id');
+  if(!uid) return;
+  const {data} = await sb.from('users').select('*').eq('id',uid).maybeSingle();
+  if(data){ state.user = data; await loadFavs(); }
+}
+async function loadFavs(){
+  state.favs = new Set();
+  if(!state.user) return;
+  const {data} = await sb.from('favorites').select('dish_id').eq('user_id', state.user.id);
+  (data||[]).forEach(x=> state.favs.add(x.dish_id));
+}
+
+/* ---------- рендер ---------- */
+function renderAll(){
+  renderImages(); renderRegionTags(); renderRegionPanel(); renderDishes();
+  renderWomen(); renderFamily(); renderStats(); updateAuthUI(); updateAdminBadge();
+}
+function updateAdminBadge(){
+  const n=pendingCount();
+  $$('#adminBtn .nav-badge,#adminBtnM .nav-badge').forEach(b=>{ b.textContent=n; b.style.display=(isAdmin()&&n)?'inline-flex':'none'; });
+}
+
+const IMG_KEYS = ['cart_glavn','feat_map','feat_dishes','feat_women','feat_family','map_belarus']; // ключи из site_images
+function setImg(img,url){
+  const ph = phSvg(esc(img.alt||'Smachna esczi'),'#B4554C','#5E1A15');
+  const showPh = ()=>{ if(img.dataset.state!=='db'){ img.src=ph; img.dataset.state='ph'; } img.classList.add('loaded'); };
+  if(!url){ showPh(); return; }
+  if(img.dataset.url===url) return;
+  img.dataset.url=url;
+  const t=new Image();
+  t.onload=()=>{ img.src=url; img.dataset.state='db'; img.classList.add('loaded'); };
+  t.onerror=()=>{ console.warn('Foto ne zagruzilos:',url); showPh(); };
+  t.src=url;
+}
+function renderImages(){ $$('img[data-si]').forEach(img=>setImg(img,state.images[img.dataset.si])); }
+async function loadSiteImages(){
+  try{
+    const {data,error}=await sb.from('site_images').select('*');
+    if(error) throw error;
+    (data||[]).forEach(x=>{ state.images[x.key]=x.url; });
+  }catch(e){ console.warn('site_images:',e); }
+  renderImages();
+}
+function setVideo(v,url){
+  if(!url || v.dataset.url===url) return;
+  v.dataset.url=url; v.src=url; v.muted=true;
+  const p=v.play(); if(p&&p.catch) p.catch(()=>{});
+}
+function renderImages(){
+  $$('img[data-si]').forEach(img=>setImg(img,state.images[img.dataset.si]));
+  $$('video[data-sv]').forEach(v=>setVideo(v,state.images[v.dataset.sv]));
+}
+
+function animateCount(el, target){
+  if(!el) return;
+  let cur = 0;
+  const step = Math.max(1, Math.ceil(target / 45));
+  const t = setInterval(()=>{
+    cur += step;
+    if(cur >= target){ cur = target; clearInterval(t); }
+    el.textContent = cur;
+  }, 28);
+}
+function renderStats(){
+  animateCount($('#statDishes'), state.dishes.length);
+  animateCount($('#statWomen'), state.women.length);
+  animateCount($('#statFamily'), approvedFamily().length);
+}
+
+function renderRegionTags(){
+  const wrap = $('#regionTags'); wrap.innerHTML='';
+  const mk=(key,label)=>{ const b=document.createElement('button'); b.className='region-tag'+(state.region===key?' active':''); b.textContent=label;
+    b.style.animationDelay=(wrap.children.length*0.05)+'s';
+    b.onclick=()=>selectRegion(key); wrap.appendChild(b); };
+  mk('all','Вся Беларусь');
+  Object.keys(REGIONS).forEach(k=>mk(k, REGIONS[k].name));
+}
+
+function renderRegionPanel(){
+  if(state.region==='all'){
+    $('#regionName').textContent='Вся Беларусь';
+    $('#regionDesc').textContent='Выберите область — и галерея ниже покажет её блюда, а здесь появится рассказ о том, как здесь жили и готовили в войну.';
+  } else {
+    $('#regionName').textContent=REGIONS[state.region].name;
+    $('#regionDesc').textContent=REGIONS[state.region].desc;
+  }
+}
+
+function selectRegion(key){
+  state.region=key;
+  $$('#belarusOverlay path').forEach(p=> p.classList.toggle('active', p.dataset.region===key));
+  renderRegionTags(); renderRegionPanel(); renderDishes();
+  if(key!=='all') $('#dishesTitle').textContent = 'Блюда: ' + REGIONS[key].name;
+  else $('#dishesTitle').textContent = 'Блюда, у которых есть военная биография';
+}
+
+function filteredDishes(){
+  return state.dishes.filter(d=>{
+    if(state.region!=='all' && d.region!==state.region) return false;
+    if(state.search){
+      const q=state.search.toLowerCase();
+      const hay=(d.title+' '+(d.subtitle||'')+' '+(d.description||'')).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+function renderDishes(){
+  const grid=$('#dishesGrid'); grid.innerHTML='';
+  const list=filteredDishes();
+  $('#dishesCount').textContent = 'Найдено: '+list.length;
+  if(!list.length){
+    grid.innerHTML=`<div class="empty-state"><span class="big">&#10022;</span><b>Ничего не найдено</b><p>Попробуйте изменить запрос или выбрать другую область на карте.</p></div>`;
+    return;
+  }
+  list.forEach((d,i)=>{
+    const r=avgRating(d.id); const cnt=state.reviews.filter(x=>x.dish_id===d.id).length;
+    const keeper = d.woman_id ? womanById(d.woman_id) : null;
+    const pls = state.places.filter(p=>placeHasDish(p,d.id));
+    const card=document.createElement('article'); card.className='dish-card';
+    card.innerHTML=`
+      <img class="dish-img" data-id="${esc(d.id)}" data-src="${esc(d.image||'')}" src="${esc(d.image||phSvg(d.title||'Блюдо','#B4554C','#5E1A15'))}" alt="${esc(d.title)}" decoding="async"${i<6?' fetchpriority="high"':' loading="lazy"'}>
+      <div class="dish-body">
+        <span class="region-label">${esc(REGIONS[d.region]?.name || d.region || '')}</span>
+        <h4>${esc(d.title)}</h4>
+        <div class="subtitle">${esc(d.subtitle||'')}</div>
+        <p>${esc((d.description||'').slice(0,150))}${(d.description||'').length>150?'…':''}</p>
+        ${keeper?`<div class="keeper-line">Сберегла: ${esc(keeper.name)}</div>`:''}
+        ${pls.length?`<button type="button" class="try-line" data-try="${d.id}">${PIN_SVG}<span class="tl-text">Где попробовать: ${esc(pls[0].name)}${pls.length>1?' и ещё '+(pls.length-1):''}</span><span class="tl-go">Адрес →</span></button>`:''}
+        <div class="dish-meta">
+          <span class="rating-line"><span class="stars">${starsStr(r)}</span> ${r?r.toFixed(1):'—'} (${cnt})</span>
+          ${d.calories?`<span class="cal">${esc(d.calories)}</span>`:''}
+        </div>
+      </div>`;
+    card.onclick=()=>openDish(d.id);
+    const tb=card.querySelector('[data-try]'); if(tb) tb.onclick=e=>{ e.stopPropagation(); openDish(d.id,{scrollToPlaces:true}); };
+    card.style.animationDelay = (Math.min(i,8)*0.06)+'s';
+    grid.appendChild(card);
+  });
+}
+
+function renderWomen(){
+  const grid=$('#womenGrid'); grid.innerHTML='';
+  const war=state.women.filter(w=>!w.modern), mod=state.women.filter(w=>w.modern);
+  const bannerW=document.createElement('div'); bannerW.className='woman-war-banner';
+  bannerW.innerHTML='<span>Хранительницы 1941–1945</span><small>женщины, чьи руки сберегли кухню в войну</small>';
+  grid.appendChild(bannerW);
+  war.forEach(w=>grid.appendChild(womanCard(w)));
+  if(mod.length){
+    const bannerM=document.createElement('div'); bannerM.className='woman-modern-banner';
+    bannerM.innerHTML='<span><span class="wmb-star">&#10022;</span>Продолжательницы<span class="wmb-star">&#10022;</span></span><small>современные хозяйки и повара, которые несут традицию дальше</small>';
+    grid.appendChild(bannerM);
+    mod.forEach(w=>grid.appendChild(womanCard(w)));
+  }
+  if(!state.women.length) grid.innerHTML='<div class="empty-state"><b>Истории появятся здесь</b></div>';
+}
+
+function womanCard(w){
+  const card=document.createElement('button'); card.className='woman-card'+(w.modern?' modern':'');
+  card.innerHTML=`
+    <div class="woman-photo">
+      ${w.photo?`<img class="wp" src="${esc(w.photo)}" alt="${esc(w.name)}" loading="lazy">`:`<span class="initial">${esc(initials(w.name))}</span>`}
+      <span class="wregion">${esc(REGIONS[w.region]?.name || w.region || 'Беларусь')}</span>
+    </div>
+    <div class="woman-body">
+      <span class="wname">${esc(w.name)}</span>
+      <span class="wmeta">${esc(w.years||'')}</span>
+      ${w.role?`<span class="wrole">${esc(w.role)}</span>`:''}
+      <p>${esc(w.short||'')}</p>
+      <span class="wmore">Читать историю →</span>
+    </div>`;
+  card.onclick=()=>openWoman(w.id);
+  return card;
+}
+
+function renderFamily(){
+  const grid=$('#familyGrid'); grid.innerHTML='';
+  const list=approvedFamily();
+  if(!list.length){
+    grid.innerHTML='<div class="empty-state"><span class="big">&#10022;</span><b>Пока пусто — станьте первой</b><p>Запишите рецепт своей бабушки, и после проверки он появится здесь.</p></div>';
+    return;
+  }
+  list.forEach(f=>{
+    const card=document.createElement('article'); card.className='family-card';
+    card.innerHTML=`
+      ${f.image_url?`<img class="fc-img" src="${esc(f.image_url)}" alt="" loading="lazy">`:`<div class="fc-img" style="display:flex;align-items:center;justify-content:center;font-size:2.4rem;color:var(--green-dark)">&#10022;</div>`}
+      <div class="fc-body">
+        <span class="fc-from">${esc(f.from_name)}</span>
+        ${f.years?`<span class="fc-years">${esc(f.years)}</span>`:''}
+        ${f.dish_name?`<span class="fc-dish">${esc(f.dish_name)}</span>`:''}
+        <p>${esc(f.text||'')}</p>
+        <div class="fc-meta"><span class="author">${esc(f.user_name||'Гость')}</span><span>${fmtDate(f.created_at)}</span></div>
+      </div>`;
+    card.onclick=()=>openFamilyView(f.id);
+    grid.appendChild(card);
+  });
+}
+
+
+/* ---------- где попробовать ---------- */
+const PIN_SVG='<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="flex:none"><path fill="currentColor" d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
+function placeQuery(p){ return [p.name,p.address].filter(Boolean).join(', '); }
+function placeCard(p,i){
+  const q=encodeURIComponent(placeQuery(p));
+  const thumb = p.image ? `<img class="pl-thumb" src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy">`
+                        : `<span class="pl-thumb ph">${PIN_SVG.replace('width="16" height="16"','width="26" height="26"')}</span>`;
+  const big = p.image ? `<img class="pl-bigimg" src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy">` : '';
+  return `
+  <div class="pl-card" data-pl="${i}">
+    <button class="pl-top" type="button" aria-expanded="false">
+      ${thumb}
+      <span class="pl-info">
+        <div class="pname">${esc(p.name)}</div>
+        ${p.address?`<div class="paddr">${PIN_SVG}<span>${esc(p.address)}</span></div>`:''}
+      </span>
+      <span class="pl-chev" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </button>
+    <div class="pl-more">
+      ${big}
+      ${p.address?`<div class="pl-addr-row">${PIN_SVG}<span><b>${esc(p.name)}</b><br>${esc(p.address)}</span></div>`:''}
+      <div class="pl-actions">
+        <a class="btn btn-green btn-sm" target="_blank" rel="noopener" href="https://yandex.by/maps/?text=${q}">Открыть на Яндекс Картах</a>
+        <a class="btn btn-ghost btn-sm" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${q}">Google Maps</a>
+        ${p.address?`<button class="btn btn-ghost btn-sm" type="button" data-copy="${esc(p.address)}">Скопировать адрес</button>`:''}
+      </div>
+      <div class="pl-map-wrap" data-q="${q}"></div>
+    </div>
+  </div>`;
+}
+function ensurePlaceMap(card){
+  const w=card.querySelector('.pl-map-wrap');
+  if(!w || w.dataset.ready) return;
+  w.dataset.ready='1';
+  w.innerHTML=`<iframe class="pl-map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Карта" src="https://maps.google.com/maps?q=${w.dataset.q}&output=embed&hl=ru"></iframe>`;
+}
+function bindPlaceCards(){
+  $$('#modalContent .pl-card').forEach(card=>{
+    const top=card.querySelector('.pl-top');
+    top.onclick=()=>{
+      const open=!card.classList.contains('open');
+      card.classList.toggle('open',open);
+      top.setAttribute('aria-expanded',open);
+      if(open) ensurePlaceMap(card);
+    };
+  });
+  $$('#modalContent [data-copy]').forEach(b=>b.onclick=async()=>{
+    try{ await navigator.clipboard.writeText(b.dataset.copy); toast('Адрес скопирован'); }catch(e){ toast('Не удалось скопировать', true); }
+  });
+  const j=$('#tryJump'); if(j) j.onclick=()=>{ const t=$('#tryIt'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); };
+}
+function placesWord(n){ const m=n%10, h=n%100; return (m===1&&h!==11)?'место':(m>=2&&m<=4&&(h<12||h>14))?'места':'мест'; }
+
+/* ---------- модалка блюда ---------- */
+let pickerRating = 5;
+function openDish(id,opts){
+  opts=opts||{};
+  const d=dishById(id); if(!d) return;
+  const r=avgRating(id); const cnt=state.reviews.filter(x=>x.dish_id===id).length;
+  const keeper=d.woman_id?womanById(d.woman_id):null;
+  const places=state.places.filter(p=>placeHasDish(p,id));
+  let ingredients=[], recipe=[];
+  try{ ingredients=Array.isArray(d.ingredients)?d.ingredients:JSON.parse(d.ingredients||'[]'); }catch(e){}
+  try{ recipe=Array.isArray(d.recipe)?d.recipe:JSON.parse(d.recipe||'[]'); }catch(e){}
+
+  $('#modalContent').innerHTML=`
+    <h2 class="dtitle">${esc(d.title)}</h2>
+    <div class="dmeta">${esc(REGIONS[d.region]?.name||'')} ${d.subtitle?('· '+esc(d.subtitle)):''}</div>
+    ${places.length?`<button class="try-jump" type="button" id="tryJump">${PIN_SVG}Где попробовать: ${places.length} ${placesWord(places.length)} ↓</button>`:''}
+    <img class="dish-hero-img" src="${esc(d.image||phSvg(d.title||'','#B4554C','#5E1A15'))}" alt="${esc(d.title)}">
+    <p style="color:#4b443e">${esc(d.description||'')}</p>
+    ${d.history?`<div class="history-block"><h3>Как готовили в войну</h3><p>${esc(d.history)}</p></div>`:''}
+    ${keeper?`
+      <div class="keeper-block" id="kbGo">
+        <div class="kb-av">${keeper.photo?`<img src="${esc(keeper.photo)}" alt="">`:esc(initials(keeper.name))}</div>
+        <div><div class="kb-label">Хранительница этого рецепта</div><div class="kb-name">${esc(keeper.name)}</div></div>
+        <div class="kb-go">История →</div>
+      </div>`:''}
+    ${places.length?`
+    <section class="tryit" id="tryIt">
+      <div class="tryit-head"><span class="ti-ico">${PIN_SVG.replace('width="16" height="16"','width="22" height="22"')}</span><h3>Где попробовать</h3></div>
+      <p class="tryit-sub">Нажмите на заведение — откроются фото, адрес и карта.</p>
+      ${places.map(placeCard).join('')}
+    </section>`:''}
+    <div class="dish-cols">
+      <div><h3>Ингредиенты</h3><ul>${ingredients.map(i=>`<li>${esc(i)}</li>`).join('')||'<li>—</li>'}</ul></div>
+      <div><h3>Как готовить</h3><ol>${recipe.map(i=>`<li>${esc(i)}</li>`).join('')||'<li>—</li>'}</ol></div>
+    </div>
+    <div class="kbju">
+      ${d.calories?`<span>Калории: ${esc(d.calories)}</span>`:''}
+      ${d.protein?`<span>Белки: ${esc(d.protein)}</span>`:''}
+      ${d.fat?`<span>Жиры: ${esc(d.fat)}</span>`:''}
+      ${d.carbs?`<span>Углеводы: ${esc(d.carbs)}</span>`:''}
+    </div>
+    ${''}
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:26px">
+      <h3 class="subhead" style="margin:0;border:none">Отзывы <span style="color:var(--gold)">${starsStr(r)}</span> ${r?r.toFixed(1):''} (${cnt})</h3>
+      <button class="btn ${state.favs.has(id)?'btn-red':'btn-ghost'}" id="favBtn">${state.favs.has(id)?'♥ В избранном':'♡ В избранное'}</button>
+    </div>
+    <div id="reviewsList"></div>
+    <div class="review-form">
+      <h3 style="font-size:1.05rem;margin-bottom:10px">Оставить отзыв</h3>
+      <div id="starPickerContainer">${[1,2,3,4,5].map(n=>`<span class="star ${n<=5?'on':''}" data-star="${n}">★</span>`).join('')}</div>
+      <textarea class="field" id="reviewText" placeholder="Поделитесь впечатлением о блюде"></textarea>
+      <button class="btn btn-red" id="sendReviewBtn">Отправить</button>
+    </div>`;
+  openModal('dishModal');
+
+  const kb=$('#kbGo'); if(kb) kb.onclick=()=>{ closeModal('dishModal'); openWoman(keeper.id); };
+  bindPlaceCards();
+  const ov=$('#dishModal'); if(ov) ov.scrollTop=0;
+  if(opts.scrollToPlaces && places.length) setTimeout(()=>{ const t=$('#tryIt'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); },80);
+  $('#favBtn').onclick=()=>toggleFav(id);
+  pickerRating=5;
+  $$('#starPickerContainer .star').forEach(s=>s.onclick=()=>{
+    pickerRating=+s.dataset.star;
+    $$('#starPickerContainer .star').forEach(x=>x.classList.toggle('on', +x.dataset.star<=pickerRating));
+  });
+  $('#sendReviewBtn').onclick=()=>sendReview(id);
+  renderReviews(id);
+}
+
+function renderReviews(dishId){
+  const list=state.reviews.filter(x=>x.dish_id===dishId);
+  const wrap=$('#reviewsList'); if(!wrap) return;
+  wrap.innerHTML = list.length ? '' : '<p style="color:var(--muted);font-size:.92rem;margin-top:8px">Пока нет отзывов — будьте первым.</p>';
+  list.forEach(rv=>{
+    const div=document.createElement('div'); div.className='review';
+    const canDel = state.user && (state.user.id===rv.user_id || state.user.role==='admin');
+    div.innerHTML=`
+      <div class="rhead">
+        <span class="ruser">${esc(rv.user_name||'Гость')} <span class="stars">${starsStr(rv.rating)}</span></span>
+        <span class="rdate">${fmtDate(rv.created_at)} ${canDel?`<button class="rdel" data-del="${rv.id}">удалить</button>`:''}</span>
+      </div>
+      <p>${esc(rv.text||'')}</p>
+      ${rv.image_url?`<img class="rimg" src="${esc(rv.image_url)}" alt="">`:''}`;
+    wrap.appendChild(div);
+  });
+  $$('#reviewsList .rdel').forEach(b=>b.onclick=async()=>{
+    await sb.from('reviews').delete().eq('id', b.dataset.del);
+    state.reviews=state.reviews.filter(x=>x.id!==b.dataset.del);
+    renderReviews(dishId); renderDishes(); renderStats();
+  });
+}
+
+async function sendReview(dishId){
+  if(!state.user){ toast('Войдите, чтобы оставить отзыв', true); openAuth(false); return; }
+  const text=$('#reviewText').value.trim();
+  if(!text){ toast('Напишите текст отзыва', true); return; }
+  loader(true);
+  const {data,error}=await sb.from('reviews').insert({
+    dish_id:dishId, user_id:state.user.id, user_name:state.user.name,
+    rating:pickerRating, text, created_at:new Date().toISOString()
+  }).select().single();
+  loader(false);
+  if(error){ toast('Не удалось отправить отзыв', true); return; }
+  state.reviews.unshift(data);
+  renderReviews(dishId); renderDishes(); toast('Спасибо за отзыв!');
+}
+
+async function toggleFav(dishId){
+  if(!state.user){ toast('Войдите, чтобы добавлять в избранное', true); openAuth(false); return; }
+  if(state.favs.has(dishId)){
+    await sb.from('favorites').delete().eq('user_id',state.user.id).eq('dish_id',dishId);
+    state.favs.delete(dishId);
+  } else {
+    await sb.from('favorites').insert({user_id:state.user.id, dish_id:dishId, created_at:new Date().toISOString()});
+    state.favs.add(dishId);
+  }
+  openDish(dishId);
+}
+
+/* ---------- модалка женщины ---------- */
+function openWoman(id){
+  const w=womanById(id); if(!w) return;
+  const dishes=state.dishes.filter(d=>d.woman_id===id);
+  $('#womanContent').innerHTML=`
+    <div style="text-align:center"><img class="woman-modal-photo" src="${esc(w.photo||phSvg(initials(w.name),'#8C2A22','#5E1A15'))}" alt="${esc(w.name)}"></div>
+    <h2 style="text-align:center">${esc(w.name)}</h2>
+    <div class="dmeta" style="text-align:center">${esc(w.years||'')} · ${esc(REGIONS[w.region]?.name||'')} ${w.role?('· '+esc(w.role)):''}</div>
+    <div class="history-block" style="margin-top:22px"><h3>История</h3><p>${esc(w.history||w.short||'')}</p></div>
+    ${dishes.length?`<h3 class="subhead">Связанные блюда</h3>`+dishes.map(d=>`
+      <div class="place-item" data-dish="${d.id}" style="cursor:pointer">
+        <img src="${esc(d.image||phSvg(d.title||'','#B4554C','#5E1A15'))}" alt="">
+        <div><div class="pname">${esc(d.title)}</div><div class="paddr">${esc(d.subtitle||'')}</div></div>
+      </div>`).join(''):''}`;
+  openModal('womanModal');
+  $$('#womanContent [data-dish]').forEach(el=>el.onclick=()=>{ closeModal('womanModal'); openDish(el.dataset.dish); });
+}
+
+/* ---------- семейные рецепты ---------- */
+function fillDishSelect(sel){
+  sel.innerHTML='<option value="">— не выбрано —</option>'+state.dishes.map(d=>`<option value="${d.id}">${esc(d.title)}</option>`).join('');
+}
+function openFamilyForm(id){
+  if(!state.user){ toast('Войдите, чтобы добавить рецепт', true); openAuth(false); return; }
+  const f = id ? famById(id) : null;
+  if(id && (!f || !canEditFam(f))){ toast('Нельзя изменить этот рецепт', true); return; }
+  state.editFamId = f ? f.id : null;
+  fillDishSelect($('#ffDish'));
+  $('#ffDish').value = f && f.dish_id ? f.dish_id : '';
+  $('#ffFrom').value = f ? (f.from_name||'') : '';
+  $('#ffYears').value = f ? (f.years||'') : '';
+  $('#ffText').value = f ? (f.text||'') : '';
+  $('#ffImage').value=''; $('#ffRemoveImg').checked=false;
+  const cur=$('#ffCurPhoto');
+  if(f && f.image_url){ $('#ffCurImg').src=f.image_url; cur.style.display='flex'; } else cur.style.display='none';
+  const admin=isAdmin();
+  $('#ffTitle').textContent = f ? 'Изменить рецепт' : 'Семейный рецепт';
+  $('#ffNote').textContent = f
+    ? (admin ? 'Вы редактируете рецепт как администратор — статус не изменится.' : 'После сохранения рецепт снова будет отправлен на проверку администратору.')
+    : (admin ? 'Рецепты администратора публикуются сразу.' : 'Перед публикацией рецепт проверяет администратор. После одобрения он появится в разделе «Семейные рецепты» рядом с вашим именем.');
+  $('#ffSubmit').textContent = f ? (admin ? 'Сохранить изменения' : 'Сохранить и отправить на проверку') : (admin ? 'Опубликовать рецепт' : 'Отправить на проверку');
+  clearErr('#familyFormError');
+  openModal('familyFormModal');
+}
+async function submitFamily(){
+  clearErr('#familyFormError');
+  const from=$('#ffFrom').value.trim(), text=$('#ffText').value.trim();
+  if(!from){ showErr('#familyFormError','Укажите, от кого рецепт'); return; }
+  if(!text){ showErr('#familyFormError','Напишите рецепт и историю'); return; }
+  const editing = state.editFamId ? famById(state.editFamId) : null;
+  if(editing && !canEditFam(editing)){ showErr('#familyFormError','Нет прав на изменение'); return; }
+  loader(true);
+  const img=await readFileB64($('#ffImage'));
+  const dishId=$('#ffDish').value||null;
+  const dish=dishId?dishById(dishId):null;
+  const admin=isAdmin();
+  const row={ dish_id:dishId, dish_name:dish?dish.title:'', from_name:from, years:$('#ffYears').value.trim(), text };
+  if(img) row.image_url=img; else if(editing && $('#ffRemoveImg').checked) row.image_url=null;
+  let error;
+  if(editing){
+    // автор правит рецепт -> снова на проверку; админ статус не меняет
+    if(!admin){ row.status='pending'; row.reject_reason=null; }
+    ({error}=await sb.from('family_recipes').update(row).eq('id',editing.id));
+  } else {
+    Object.assign(row,{ image_url:img||null, status: admin?'approved':'pending', reject_reason:null,
+      user_name:state.user.name, user_id:state.user.id, created_at:new Date().toISOString() });
+    ({error}=await sb.from('family_recipes').insert(row));
+  }
+  loader(false);
+  if(error){
+    console.error(error);
+    const hint=/status|reject_reason/i.test(error.message||'') ? ' (в базе нет колонок status / reject_reason — выполните SQL из инструкции)' : '';
+    showErr('#familyFormError','Не удалось сохранить. Попробуйте ещё раз.'+hint); return;
+  }
+  closeModal('familyFormModal');
+  if(editing){
+    Object.assign(editing,row);
+    toast(admin ? 'Изменения сохранены' : 'Сохранено и отправлено на проверку');
+  } else {
+    toast(admin ? 'Рецепт опубликован!' : 'Спасибо! Рецепт отправлен на проверку администратору');
+    const {data}=await sb.from('family_recipes').select('*').order('created_at',{ascending:false});
+    state.family=data||state.family;
+  }
+  state.editFamId=null;
+  renderFamily(); renderStats(); updateAdminBadge();
+  if($('#adminModal').classList.contains('active')) renderAdmin();
+  if($('#accountModal').classList.contains('active')) renderAccTab('myrecipes');
+}
+async function deleteFamily(id){
+  if(!confirm('Удалить рецепт? Это действие нельзя отменить.')) return false;
+  const {error}=await sb.from('family_recipes').delete().eq('id',id);
+  if(error){ toast('Не удалось удалить', true); return false; }
+  state.family=state.family.filter(x=>String(x.id)!==String(id));
+  renderFamily(); renderStats(); updateAdminBadge();
+  toast('Рецепт удалён');
+  return true;
+}
+function famBadge(f){ const st=famStatus(f); return `<span class="st-badge st-${st}">${FAM_ST[st]||st}</span>`; }
+function openFamilyView(id){
+  const f=famById(id); if(!f) return;
+  const canEdit=canEditFam(f), st=famStatus(f);
+  let note='';
+  if(st==='pending' && canEdit) note='<div class="fam-note pending">Рецепт на проверке у администратора. Пока его видите только вы.</div>';
+  if(st==='rejected' && canEdit) note=`<div class="fam-note rejected"><b>Рецепт отклонён.</b>${f.reject_reason?' Причина: '+esc(f.reject_reason):''}<br>Исправьте рецепт и сохраните — он снова уйдёт на проверку.</div>`;
+  $('#familyViewContent').innerHTML=`
+    <h2 class="dtitle" style="font-style:italic">${esc(f.from_name)}</h2>
+    <div class="dmeta">${esc(f.years||'')} ${f.dish_name?('· '+esc(f.dish_name)):''}</div>
+    ${note}
+    ${f.image_url?`<img class="dish-hero-img" src="${esc(f.image_url)}" alt="" style="height:260px">`:''}
+    <div class="history-block"><p style="white-space:pre-line">${esc(f.text)}</p></div>
+    <div class="rhead"><span class="ruser" style="color:var(--green-dark)">${esc(f.user_name||'Гость')}</span><span class="rdate">${fmtDate(f.created_at)}</span></div>
+    ${canEdit?`<div class="fam-actions"><button class="btn btn-green btn-sm" id="editFamilyBtn">Изменить рецепт</button><button class="btn btn-ghost btn-sm" id="delFamilyBtn">Удалить рецепт</button></div>`:''}`;
+  openModal('familyViewModal');
+  const ed=$('#editFamilyBtn'), del=$('#delFamilyBtn');
+  if(ed) ed.onclick=()=>{ closeModal('familyViewModal'); openFamilyForm(f.id); };
+  if(del) del.onclick=async()=>{ if(await deleteFamily(f.id)) closeModal('familyViewModal'); };
+}
+
+/* ---------- авторизация ---------- */
+let authMode='register';
+function openAuth(mode){
+  authMode=mode?'register':'login';
+  syncAuthModal(); clearErr('#authError');
+  openModal('authModal');
+}
+function syncAuthModal(){
+  const reg=authMode==='register';
+  $('#authTitle').textContent=reg?'Регистрация':'Вход';
+  $('#authNameWrap').style.display=reg?'block':'none';
+  $('#authSubmitBtn').textContent=reg?'Зарегистрироваться':'Войти';
+  $('#authToggleLink').textContent=reg?'Уже есть аккаунт? Войти':'Нет аккаунта? Зарегистрироваться';
+}
+async function submitAuth(){
+  clearErr('#authError');
+  const email=$('#authEmail').value.trim().toLowerCase(), pass=$('#authPassword').value;
+  if(!email||!pass){ showErr('#authError','Введите email и пароль'); return; }
+  loader(true);
+  if(authMode==='register'){
+    const name=$('#authName').value.trim();
+    if(!name){ loader(false); showErr('#authError','Введите имя'); return; }
+    if(pass.length<4){ loader(false); showErr('#authError','Пароль — минимум 4 символа'); return; }
+    const {data:ex}=await sb.from('users').select('id').eq('email',email).maybeSingle();
+    if(ex){ loader(false); showErr('#authError','Такой email уже зарегистрирован'); return; }
+    const {data,error}=await sb.from('users').insert({name,email,password:pass,role:'user',created_at:new Date().toISOString()}).select().single();
+    loader(false);
+    if(error){ showErr('#authError','Ошибка регистрации'); return; }
+    state.user=data;
+  } else {
+    const {data,error}=await sb.from('users').select('*').eq('email',email).eq('password',pass).maybeSingle();
+    loader(false);
+    if(error||!data){ showErr('#authError','Неверный email или пароль'); return; }
+    state.user=data;
+  }
+  localStorage.setItem('se_user_id', state.user.id);
+  await loadFavs();
+  setTimeout(migrateBase64Images, 4000);
+  closeModal('authModal'); updateAuthUI(); renderDishes(); renderFamily();
+  toast('Добро пожаловать, '+state.user.name+'!');
+}
+function updateAuthUI(){
+  setTimeout(updateAdminBadge,0);
+  const u=state.user, admin=u&&u.role==='admin';
+  [['#authBtn',!u],['#authBtnM',!u],['#accountBtn',u],['#accountBtnM',u],['#logoutBtn',u],['#logoutBtnM',u],['#adminBtn',admin],['#adminBtnM',admin]]
+    .forEach(([sel,show])=> $(sel).style.display=show?'inline-flex':'none');
+}
+function logout(){
+  state.user=null; state.favs=new Set(); localStorage.removeItem('se_user_id');
+  updateAuthUI(); renderDishes(); toast('Вы вышли из аккаунта');
+}
+
+/* ---------- кабинет ---------- */
+function openAccount(){
+  if(!state.user) return;
+  const u=state.user;
+  const av=$('#accAvatar');
+  av.innerHTML = u.avatar_url?`<img src="${esc(u.avatar_url)}" alt="">`:esc(initials(u.name));
+  $('#accName').textContent=u.name; $('#accEmail').textContent=u.email+(u.bio?' · '+u.bio:'');
+  $$('#accountModal .tab').forEach(t=>t.classList.toggle('active', t.dataset.tab==='myreviews'));
+  renderAccTab('myreviews');
+  openModal('accountModal');
+}
+function renderAccTab(tab){
+  const c=$('#accContent'); const uid=state.user.id;
+  if(tab==='myreviews'){
+    const list=state.reviews.filter(r=>r.user_id===uid);
+    c.innerHTML=list.length?'':'<p style="color:var(--muted)">Вы ещё не оставляли отзывов.</p>';
+    list.forEach(r=>{
+      const d=dishById(r.dish_id);
+      const div=document.createElement('div'); div.className='acc-review';
+      div.innerHTML=`<span class="dish-name" data-open="${r.dish_id}">${esc(d?d.title:'Блюдо удалено')}</span> <span class="stars" style="color:var(--gold)">${starsStr(r.rating)}</span><p style="font-size:.92rem;color:#544c45">${esc(r.text||'')}</p>`;
+      c.appendChild(div);
+    });
+  }
+  if(tab==='favs'){
+    const list=state.dishes.filter(d=>state.favs.has(d.id));
+    c.innerHTML=list.length?'':'<p style="color:var(--muted)">В избранном пока пусто. Откройте блюдо и нажмите «В избранное».</p>';
+    list.forEach(d=>{
+      const div=document.createElement('div'); div.className='acc-review';
+      div.innerHTML=`<span class="dish-name" data-open="${d.id}">${esc(d.title)}</span><p style="font-size:.9rem;color:var(--muted)">${esc(d.subtitle||'')}</p>`;
+      c.appendChild(div);
+    });
+  }
+  if(tab==='myrecipes'){
+    const list=state.family.filter(f=>String(f.user_id)===String(uid));
+    c.innerHTML=list.length?'':'<p style="color:var(--muted)">Вы ещё не добавляли семейные рецепты.</p>';
+    list.forEach(f=>{
+      const div=document.createElement('div'); div.className='acc-review';
+      div.innerHTML=`<div class="acc-fam-top"><span class="dish-name" data-fam="${esc(f.id)}">${esc(f.from_name)}</span> <span class="fryears">${esc(f.years||'')}</span> ${famBadge(f)}</div>
+        <p style="font-size:.9rem;color:var(--muted)">${esc((f.text||'').slice(0,120))}${(f.text||'').length>120?'…':''}</p>
+        ${famStatus(f)==='rejected'?`<p style="font-size:.86rem;color:#9B2C22;margin-top:6px">Отклонён${f.reject_reason?': '+esc(f.reject_reason):''}</p>`:''}
+        <div class="acc-fam-acts"><button class="btn btn-green btn-sm" data-fam-edit="${esc(f.id)}">Изменить</button><button class="btn btn-ghost btn-sm" data-fam-del="${esc(f.id)}">Удалить</button></div>`;
+      c.appendChild(div);
+    });
+    $$('#accContent [data-fam-edit]').forEach(b=>b.onclick=()=>{ closeModal('accountModal'); openFamilyForm(b.dataset.famEdit); });
+    $$('#accContent [data-fam-del]').forEach(b=>b.onclick=async()=>{ if(await deleteFamily(b.dataset.famDel)) renderAccTab('myrecipes'); });
+  }
+  $$('#accContent [data-open]').forEach(el=>el.onclick=()=>{ closeModal('accountModal'); openDish(el.dataset.open); });
+  $$('#accContent [data-fam]').forEach(el=>el.onclick=()=>{ closeModal('accountModal'); openFamilyView(el.dataset.fam); });
+}
+async function saveProfile(){
+  clearErr('#profileError');
+  const name=$('#peName').value.trim(); if(!name){ showErr('#profileError','Имя не может быть пустым'); return; }
+  loader(true);
+  const avatar=await readFileB64($('#peAvatarFile'));
+  const upd={name, bio:$('#peBio').value.trim()};
+  if(avatar) upd.avatar_url=avatar;
+  const {error}=await sb.from('users').update(upd).eq('id',state.user.id);
+  loader(false);
+  if(error){ showErr('#profileError','Не удалось сохранить'); return; }
+  Object.assign(state.user, upd);
+  closeModal('profileEditModal'); toast('Профиль обновлён');
+}
+
+/* ---------- админка ---------- */
+const adm = {tab:'family', q:'', famFilter:'all'};
+const ADM_TABS = [
+  {id:'family',  label:'Семейные рецепты', title:'Семейные рецепты', sub:'Проверяйте рецепты посетителей: одобрите, чтобы они появились на сайте.'},
+  {id:'dishes',  label:'Блюда',            title:'Блюда',            sub:'Основной каталог блюд с историей.', add:'Добавить блюдо'},
+  {id:'women',   label:'Хранительницы',    title:'Хранительницы',    sub:'Женщины, чьи истории связаны с блюдами.', add:'Добавить хранительницу'},
+  {id:'places',  label:'Заведения',        title:'Заведения',        sub:'Где можно попробовать блюда.', add:'Добавить заведение'},
+  {id:'reviews', label:'Отзывы',           title:'Отзывы',           sub:'Модерация отзывов посетителей.'}
+];
+function admCount(t){
+  return t==='family'?state.family.length : t==='dishes'?state.dishes.length : t==='women'?state.women.length : t==='places'?state.places.length : state.reviews.length;
+}
+function openAdmin(){
+  adm.q=''; $('#admSearch').value='';
+  const p=pendingCount();
+  adm.tab = p ? 'family' : adm.tab;
+  adm.famFilter = p ? 'pending' : 'all';
+  renderAdmin(); openModal('adminModal');
+}
+function renderAdmin(){
+  if(!isAdmin()) return;
+  const cur=ADM_TABS.find(t=>t.id===adm.tab)||ADM_TABS[0];
+  const pend=pendingCount();
+  $('#admNav').innerHTML = '<h2>Админ-панель<small>Смачна есці</small></h2>' + ADM_TABS.map(t=>{
+    const badge = (t.id==='family' && pend) ? `<span class="nav-badge">${pend}</span>` : `<span class="cnt">${admCount(t.id)}</span>`;
+    return `<button class="adm-tab${t.id===adm.tab?' active':''}" data-adm-tab="${t.id}"><span>${t.label}</span>${badge}</button>`;
+  }).join('');
+  $('#admTitle').textContent=cur.title; $('#admSub').textContent=cur.sub;
+  const add=$('#admAddBtn'); add.style.display=cur.add?'':'none'; add.textContent=cur.add||'';
+  renderAdminList();
+  updateAdminBadge();
+}
+function admMatch(...parts){ const q=adm.q.toLowerCase(); return !q || parts.join(' ').toLowerCase().includes(q); }
+const admThumb=(img,name)=>`<div class="adm-thumb">${img?`<img src="${esc(img)}" alt="" loading="lazy">`:esc((name||'?').trim().charAt(0).toUpperCase())}</div>`;
+function admRow(thumb, title, meta, acts){
+  return `<div class="adm-row">${thumb}<div class="adm-info"><b>${esc(title)}</b><span>${esc(meta||'')}</span></div><div class="adm-acts">${acts}</div></div>`;
+}
+const admEmpty=txt=>`<div class="adm-empty">${txt}</div>`;
+function renderAdminList(){
+  const L=$('#admList'), F=$('#admFilters'); let html='';
+  F.style.display='none';
+  if(adm.tab==='family'){
+    const cnt={all:state.family.length, pending:0, approved:0, rejected:0};
+    state.family.forEach(f=>cnt[famStatus(f)]++);
+    F.style.display='flex';
+    F.innerHTML=[['pending','На проверке'],['approved','Опубликованы'],['rejected','Отклонены'],['all','Все']]
+      .map(([k,l])=>`<button class="${adm.famFilter===k?'on':''}" data-fam-filter="${k}">${l} · ${cnt[k]}</button>`).join('');
+    const list=state.family.filter(f=>(adm.famFilter==='all'||famStatus(f)===adm.famFilter) && admMatch(f.from_name,f.text,f.user_name,f.dish_name));
+    html=list.map(f=>{
+      const st=famStatus(f);
+      const acts=[
+        st!=='approved'?`<button class="btn btn-green btn-sm" data-act="approve" data-id="${esc(f.id)}">Одобрить</button>`:'',
+        st!=='rejected'?`<button class="btn btn-ghost btn-sm" data-act="reject-open" data-id="${esc(f.id)}">Отклонить</button>`:'',
+        st==='approved'?`<button class="btn btn-ghost btn-sm" data-act="unpublish" data-id="${esc(f.id)}">Снять с публикации</button>`:'',
+        `<button class="btn btn-ghost btn-sm" data-act="fam-edit" data-id="${esc(f.id)}">Изменить</button>`,
+        `<button class="btn btn-red btn-sm" data-act="fam-del" data-id="${esc(f.id)}">Удалить</button>`
+      ].join('');
+      return `<div class="adm-fam ${st}" data-fam-card="${esc(f.id)}">
+        <div class="adm-fam-top"><div><b>${esc(f.from_name)}</b> <span class="fryears">${esc(f.years||'')}</span>
+          <div class="adm-fam-meta">${esc(f.user_name||'Гость')} · ${fmtDate(f.created_at)}${f.dish_name?' · '+esc(f.dish_name):''}</div></div>${famBadge(f)}</div>
+        <div class="adm-fam-body">${f.image_url?`<img src="${esc(f.image_url)}" alt="" loading="lazy">`:''}<div class="adm-fam-text" data-act="toggle-text" title="Нажмите, чтобы развернуть">${esc(f.text||'')}</div></div>
+        ${st==='rejected'&&f.reject_reason?`<div class="adm-fam-meta" style="color:#9B2C22;margin-top:8px">Причина отклонения: ${esc(f.reject_reason)}</div>`:''}
+        <div class="adm-fam-acts">${acts}</div>
+        <div class="adm-reject" data-reject-box="${esc(f.id)}"><input class="field" placeholder="Причина (необязательно) — автор её увидит"><button class="btn btn-red btn-sm" data-act="reject" data-id="${esc(f.id)}">Отклонить</button><button class="btn btn-ghost btn-sm" data-act="reject-cancel" data-id="${esc(f.id)}">Отмена</button></div>
+      </div>`;
+    }).join('') || admEmpty(adm.famFilter==='pending'&&!adm.q?'Новых рецептов на проверку нет':'Ничего не найдено');
+  }
+  if(adm.tab==='dishes'){
+    html=state.dishes.filter(d=>admMatch(d.title,d.subtitle,REGIONS[d.region]?.name)).map(d=>admRow(admThumb(d.image,d.title), d.title, REGIONS[d.region]?.name||'',
+      `<button class="btn btn-ghost btn-sm" data-act="dish-edit" data-id="${esc(d.id)}">Изменить</button><button class="btn btn-red btn-sm" data-act="dish-del" data-id="${esc(d.id)}">Удалить</button>`)).join('') || admEmpty('Нет блюд');
+  }
+  if(adm.tab==='women'){
+    html=state.women.filter(w=>admMatch(w.name,REGIONS[w.region]?.name)).map(w=>admRow(admThumb(w.photo,w.name), w.name, (REGIONS[w.region]?.name||'')+(w.modern?' · современная':''),
+      `<button class="btn btn-ghost btn-sm" data-act="woman-edit" data-id="${esc(w.id)}">Изменить</button><button class="btn btn-red btn-sm" data-act="woman-del" data-id="${esc(w.id)}">Удалить</button>`)).join('') || admEmpty('Нет хранительниц');
+  }
+  if(adm.tab==='places'){
+    html=state.places.map(p=>({p, titles:placeDishIds(p).map(id=>{const d=dishById(id);return d?d.title:null;}).filter(Boolean).join(', ')}))
+      .filter(x=>admMatch(x.p.name,x.p.address,x.titles)).map(({p,titles})=>admRow(admThumb(p.image,p.name), p.name, [p.address,titles].filter(Boolean).join(' · '),
+      `<button class="btn btn-ghost btn-sm" data-act="place-edit" data-id="${esc(p.id)}">Изменить</button><button class="btn btn-red btn-sm" data-act="place-del" data-id="${esc(p.id)}">Удалить</button>`)).join('') || admEmpty('Нет заведений');
+  }
+  if(adm.tab==='reviews'){
+    const list=state.reviews.filter(r=>{ const d=dishById(r.dish_id); return admMatch(r.user_name,r.text,d&&d.title); });
+    html=list.slice(0,80).map(r=>{ const d=dishById(r.dish_id);
+      return admRow(`<div class="adm-thumb" style="font-size:.9rem;color:var(--gold)">${r.rating||''}★</div>`, (r.user_name||'Гость')+(d?' — '+d.title:''), (r.text||'').slice(0,110),
+      `<button class="btn btn-red btn-sm" data-act="review-del" data-id="${esc(r.id)}">Удалить</button>`); }).join('') || admEmpty('Нет отзывов');
+    if(list.length>80) html+=`<p style="color:var(--muted);font-size:.85rem;text-align:center;margin-top:8px">Показаны первые 80 из ${list.length}. Уточните поиск.</p>`;
+  }
+  L.innerHTML=html;
+}
+async function setFamStatus(id,status,reason){
+  const upd={status, reject_reason: status==='rejected'?(reason||null):null};
+  loader(true);
+  const {error}=await sb.from('family_recipes').update(upd).eq('id',id);
+  loader(false);
+  if(error){ console.error(error); toast('Не удалось изменить статус. Проверьте, что в базе есть колонки status и reject_reason', true); return; }
+  const f=famById(id); if(f) Object.assign(f,upd);
+  renderAdmin(); renderFamily(); renderStats();
+  toast(status==='approved'?'Рецепт опубликован':status==='rejected'?'Рецепт отклонён':'Рецепт снят с публикации');
+}
+async function admAction(act,id,btn){
+  if(act==='approve') return setFamStatus(id,'approved');
+  if(act==='unpublish'){ if(confirm('Снять рецепт с публикации и вернуть на проверку?')) return setFamStatus(id,'pending'); return; }
+  if(act==='reject-open'){ const b=$('#admList [data-reject-box="'+CSS.escape(String(id))+'"]'); if(b){ b.classList.add('show'); const i=b.querySelector('input'); if(i) i.focus(); } return; }
+  if(act==='reject-cancel'){ const b=btn.closest('.adm-reject'); b.classList.remove('show'); return; }
+  if(act==='reject'){ const v=btn.closest('.adm-reject').querySelector('input').value.trim(); return setFamStatus(id,'rejected',v); }
+  if(act==='toggle-text'){ btn.classList.toggle('open'); return; }
+  if(act==='fam-edit') return openFamilyForm(id);
+  if(act==='fam-del'){ if(await deleteFamily(id)) renderAdmin(); return; }
+  if(act==='dish-edit') return openDishForm(id);
+  if(act==='dish-del'){
+    if(!confirm('Удалить блюдо?')) return;
+    await sb.from('dishes').delete().eq('id',id); imgCache.del(id);
+    state.dishes=state.dishes.filter(x=>String(x.id)!==String(id));
+    renderAdmin(); renderDishes(); renderStats(); return;
+  }
+  if(act==='woman-edit') return openWomanForm(id);
+  if(act==='woman-del'){
+    if(!confirm('Удалить хранительницу? Связанные блюда останутся, но потеряют привязку.')) return;
+    await sb.from('women').delete().eq('id',id);
+    state.women=state.women.filter(x=>String(x.id)!==String(id));
+    renderAdmin(); renderWomen(); renderRegionPanel(); renderStats(); renderDishes(); return;
+  }
+  if(act==='place-edit') return openPlaceForm(id);
+  if(act==='place-del'){
+    if(!confirm('Удалить заведение?')) return;
+    await sb.from('places').delete().eq('id',id);
+    state.places=state.places.filter(x=>String(x.id)!==String(id)); renderAdmin(); renderDishes(); return;
+  }
+  if(act==='review-del'){
+    if(!confirm('Удалить отзыв?')) return;
+    await sb.from('reviews').delete().eq('id',id);
+    state.reviews=state.reviews.filter(x=>String(x.id)!==String(id)); renderAdmin(); renderDishes(); return;
+  }
+}
+function initAdminUI(){
+  $('#admNav').addEventListener('click',e=>{
+    const b=e.target.closest('[data-adm-tab]'); if(!b) return;
+    adm.tab=b.dataset.admTab; adm.q=''; $('#admSearch').value='';
+    if(adm.tab==='family') adm.famFilter=pendingCount()?'pending':'all';
+    renderAdmin();
+  });
+  $('#admSearch').addEventListener('input',e=>{ adm.q=e.target.value.trim(); renderAdminList(); });
+  $('#admFilters').addEventListener('click',e=>{ const b=e.target.closest('[data-fam-filter]'); if(!b) return; adm.famFilter=b.dataset.famFilter; renderAdminList(); });
+  $('#admAddBtn').onclick=()=>{ if(adm.tab==='dishes') openDishForm(null); else if(adm.tab==='women') openWomanForm(null); else if(adm.tab==='places') openPlaceForm(null); };
+  $('#admList').addEventListener('click',e=>{
+    const el=e.target.closest('[data-act]'); if(!el) return;
+    admAction(el.dataset.act, el.dataset.id, el);
+  });
+}
+
+function openDishForm(id){
+  state.editDishId=id||null;
+  $('#dishFormTitle').textContent=id?'Изменить блюдо':'Добавить блюдо';
+  clearErr('#dishFormError');
+  $('#fWoman').innerHTML='<option value="">— без хранительницы —</option>'+state.women.map(w=>`<option value="${w.id}">${esc(w.name)}</option>`).join('');
+  const d=id?dishById(id):null;
+  $('#fTitle').value=d?.title||''; $('#fSubtitle').value=d?.subtitle||'';
+  $('#fRegion').value=d?.region||'minsk'; $('#fWoman').value=d?.woman_id||'';
+  $('#fImage').value=d?.image?.startsWith('http')?d.image:'';
+  $('#dishImageFile').value='';
+  $('#fCalories').value=d?.calories||''; $('#fProtein').value=d?.protein||'';
+  $('#fFat').value=d?.fat||''; $('#fCarbs').value=d?.carbs||'';
+  $('#fDescription').value=d?.description||''; $('#fHistory').value=d?.history||'';
+  let ing=[],rec=[];
+  try{ ing=Array.isArray(d?.ingredients)?d.ingredients:JSON.parse(d?.ingredients||'[]'); }catch(e){}
+  try{ rec=Array.isArray(d?.recipe)?d.recipe:JSON.parse(d?.recipe||'[]'); }catch(e){}
+  $('#fIngredients').value=ing.join('\n'); $('#fRecipe').value=rec.join('\n');
+  openModal('dishFormModal');
+}
+async function saveDish(){
+  clearErr('#dishFormError');
+  const title=$('#fTitle').value.trim();
+  if(!title){ showErr('#dishFormError','Введите название блюда'); return; }
+  loader(true);
+  const fileImg=await readFileB64($('#dishImageFile'));
+  const img=fileImg||$('#fImage').value.trim()||null;
+  const row={
+    title, subtitle:$('#fSubtitle').value.trim(), region:$('#fRegion').value,
+    woman_id:$('#fWoman').value||null, image:img,
+    calories:$('#fCalories').value.trim(), protein:$('#fProtein').value.trim(),
+    fat:$('#fFat').value.trim(), carbs:$('#fCarbs').value.trim(),
+    description:$('#fDescription').value.trim(), history:$('#fHistory').value.trim(),
+    ingredients:$('#fIngredients').value.split('\n').map(s=>s.trim()).filter(Boolean),
+    recipe:$('#fRecipe').value.split('\n').map(s=>s.trim()).filter(Boolean),
+    keeper: ($('#fWoman').value && womanById($('#fWoman').value)) ? womanById($('#fWoman').value).name : null
+  };
+  let error;
+  if(state.editDishId){ ({error}=await sb.from('dishes').update(row).eq('id',state.editDishId)); }
+  else { row.created_at=new Date().toISOString(); ({error}=await sb.from('dishes').insert(row)); }
+  loader(false);
+  if(error){ showErr('#dishFormError','Не удалось сохранить'); return; }
+  closeModal('dishFormModal'); toast('Блюдо сохранено');
+  const {data}=await sb.from('dishes').select('*').order('created_at');
+  state.dishes=data||[]; renderAdmin(); renderDishes(); renderStats();
+  state.dishes.forEach(d=>{ d.image ? imgCache.set(d.id,d.image) : imgCache.del(d.id); });
+}
+
+/* ---------- формы хранительницы ---------- */
+function openWomanForm(id){
+  state.editWomanId=id||null;
+  $('#womanFormTitle').textContent=id?'Изменить хранительницу':'Добавить хранительницу';
+  clearErr('#womanFormError');
+  const w=id?womanById(id):null;
+  $('#fwName').value=w?.name||'';
+  $('#fwYears').value=w?.years||'';
+  $('#fwRegion').value=w?.region||'minsk';
+  $('#fwRole').value=w?.role||'';
+  $('#fwShort').value=w?.short||'';
+  $('#fwHistory').value=w?.history||'';
+  $('#fwPhoto').value=(w?.photo && w.photo.startsWith('http'))?w.photo:'';
+  $('#fwPhotoFile').value='';
+  $('#fwModern').checked=!!w?.modern;
+  openModal('womanFormModal');
+}
+async function saveWoman(){
+  clearErr('#womanFormError');
+  const name=$('#fwName').value.trim();
+  if(!name){ showErr('#womanFormError','Введите имя'); return; }
+  loader(true);
+  const filePhoto=await readFileB64($('#fwPhotoFile'));
+  const photo=filePhoto||$('#fwPhoto').value.trim()||null;
+  const row={
+    name,
+    years:$('#fwYears').value.trim(),
+    region:$('#fwRegion').value,
+    role:$('#fwRole').value.trim(),
+    short:$('#fwShort').value.trim(),
+    history:$('#fwHistory').value.trim(),
+    photo,
+    modern:$('#fwModern').checked
+  };
+  let error;
+  if(state.editWomanId){ ({error}=await sb.from('women').update(row).eq('id',state.editWomanId)); }
+  else { row.created_at=new Date().toISOString(); ({error}=await sb.from('women').insert(row)); }
+  loader(false);
+  if(error){ showErr('#womanFormError','Не удалось сохранить'); return; }
+  closeModal('womanFormModal'); toast('Хранительница сохранена');
+  const {data}=await sb.from('women').select('*').order('created_at');
+  state.women=data||[];
+  renderAdmin();
+  renderWomen();
+  renderRegionPanel();
+  renderStats();
+  renderDishes();
+}
+
+/* ---------- формы заведения ---------- */
+let editPlaceId=null;
+let fpChecked=new Set();
+function renderPlaceDishList(){
+  const q=($('#fpDishSearch').value||'').trim().toLowerCase();
+  const list=state.dishes.filter(d=>!q||(d.title||'').toLowerCase().includes(q));
+  $('#fpDishList').innerHTML=list.map(d=>`<label><input type="checkbox" value="${d.id}" ${fpChecked.has(String(d.id))?'checked':''}><span>${esc(d.title)}</span><span class="dc-region">${esc(REGIONS[d.region]?.name||'')}</span></label>`).join('')||'<p style="padding:12px;color:var(--muted)">Ничего не найдено.</p>';
+  $$('#fpDishList input').forEach(cb=>cb.onchange=()=>{ cb.checked?fpChecked.add(cb.value):fpChecked.delete(cb.value); updatePlaceDishCount(); });
+  updatePlaceDishCount();
+}
+function updatePlaceDishCount(){ $('#fpDishCount').textContent=fpChecked.size?('— выбрано: '+fpChecked.size):''; }
+function openPlaceForm(id){
+  editPlaceId=id||null;
+  const p=id?state.places.find(x=>String(x.id)===String(id)):null;
+  $('#placeFormTitle').textContent=p?'Изменить заведение':'Добавить заведение';
+  $('#fpName').value=p?p.name:''; $('#fpAddress').value=p?(p.address||''):'';
+  fpChecked=new Set(p?placeDishIds(p):[]);
+  $('#fpDishSearch').value=''; $('#fpDishSearch').oninput=renderPlaceDishList;
+  renderPlaceDishList();
+  $('#fpImage').value=''; clearErr('#placeFormError'); openModal('placeFormModal');
+}
+async function savePlace(){
+  clearErr('#placeFormError');
+  const name=$('#fpName').value.trim();
+  if(!name){ showErr('#placeFormError','Введите название'); return; }
+  loader(true);
+  const img=await readFileB64($('#fpImage'));
+  const ids=[...fpChecked];
+  const row={name,address:$('#fpAddress').value.trim(),dish_id:ids[0]||null,dish_ids:ids};
+  const run=async(r)=>{
+    if(editPlaceId){
+      const x={...r}; if(img) x.image=img;   // если новое фото не выбрано — старое остаётся
+      return await sb.from('places').update(x).eq('id',editPlaceId);
+    }
+    return await sb.from('places').insert({...r,image:img,created_at:new Date().toISOString()});
+  };
+  let {error}=await run(row);
+  let noCol=false;
+  if(error && /dish_ids/i.test(error.message||'')){   // колонки dish_ids нет в базе — сохраняем только первое блюдо
+    const r2={...row}; delete r2.dish_ids; ({error}=await run(r2)); noCol=!error;
+  }
+  loader(false);
+  if(error){ console.error('places save:',error); showErr('#placeFormError','Не удалось сохранить: '+(error.message||'неизвестная ошибка')); return; }
+  closeModal('placeFormModal');
+  toast(noCol?'Сохранено только первое блюдо: добавьте в таблицу places колонку dish_ids':(editPlaceId?'Заведение обновлено':'Заведение добавлено'), noCol);
+  const {data}=await sb.from('places').select('*').order('created_at');
+  state.places=data||[]; editPlaceId=null; renderAdmin(); renderDishes();
+}
+
+/* ---------- события ---------- */
+document.addEventListener('DOMContentLoaded', ()=>{
+  // навигация без перезагрузки страницы
+  $$('[data-nav]').forEach(a=>a.addEventListener('click',e=>{
+    e.preventDefault();
+    $('#mobileMenu').classList.remove('open');
+    scrollToSel(a.dataset.nav);
+  }));
+  $$('[data-goto]').forEach(b=>b.addEventListener('click',()=>scrollToSel(b.dataset.goto)));
+  $$('[data-region-link]').forEach(b=>b.addEventListener('click',()=>{ selectRegion(b.dataset.regionLink); scrollToSel('#map-section'); }));
+  $('#logoBtn').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+
+  $('#burgerBtn').onclick=()=>$('#mobileMenu').classList.toggle('open');
+
+  // карта
+  $$('#belarusOverlay path').forEach(p=>p.addEventListener('click',()=>selectRegion(p.dataset.region)));
+
+  // нить памяти: тап на мобильных
+  $$('.thread-item').forEach(t=>t.addEventListener('click',()=>t.classList.toggle('open')));
+
+  // модалки: закрытие
+  $$('.modal-close').forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
+  $$('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) closeModal(o.id); }));
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') $$('.modal-overlay.active').forEach(o=>closeModal(o.id)); });
+
+  // поиск
+  $('#searchInput').addEventListener('input',e=>{ state.search=e.target.value.trim(); renderDishes(); });
+
+  // авторизация
+  $('#authBtn').onclick=()=>openAuth(false);
+  $('#authBtnM').onclick=()=>openAuth(false);
+  $('#authToggleLink').onclick=e=>{ e.preventDefault(); authMode=authMode==='register'?'login':'register'; syncAuthModal(); };
+  $('#authSubmitBtn').onclick=submitAuth;
+  $('#authPassword').addEventListener('keydown',e=>{ if(e.key==='Enter') submitAuth(); });
+  $('#logoutBtn').onclick=logout; $('#logoutBtnM').onclick=logout;
+
+  // кабинет
+  $('#accountBtn').onclick=openAccount; $('#accountBtnM').onclick=openAccount;
+  $$('#accountModal .tab').forEach(t=>t.onclick=()=>{
+    $$('#accountModal .tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active'); renderAccTab(t.dataset.tab);
+  });
+  $('#editProfileBtn').onclick=()=>{
+    $('#peName').value=state.user.name||''; $('#peBio').value=state.user.bio||'';
+    $('#peAvatarFile').value=''; $('#peAvatarPreview').style.display='none';
+    clearErr('#profileError'); openModal('profileEditModal');
+  };
+  $('#saveProfileBtn').onclick=saveProfile;
+
+  // админка
+  $('#adminBtn').onclick=openAdmin; $('#adminBtnM').onclick=openAdmin;
+  initAdminUI();
+  $('#saveDishBtn').onclick=saveDish;
+  $('#saveWomanBtn').onclick=saveWoman;
+  $('#savePlaceBtn').onclick=savePlace;
+
+  // семейные рецепты
+  $('#openFamilyFormBtn').onclick=()=>openFamilyForm();
+  $('#ffSubmit').onclick=submitFamily;
+
+  // появление при скролле
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} }),{threshold:.1});
+  // добавляем плавное появление всем крупным блокам и ступенчатую задержку
+  $$('.section-head,.map-frame,.stat,.quote-band,footer,.hf-item,.thread-item').forEach((el,i)=>{ el.classList.add('reveal'); el.style.setProperty('--d',((i%4)*0.1)+'s'); });
+  $$('.reveal').forEach(el=>io.observe(el));
+  // карточки из БД появляются по очереди
+  let moQueued=false;
+  const mo=new MutationObserver(()=>{
+    if(moQueued) return; moQueued=true;
+    requestAnimationFrame(()=>{
+      moQueued=false;
+      $$('.dish-card:not(.pop),.woman-card:not(.pop),.family-card:not(.pop),.place-item:not(.pop),.review:not(.pop)').forEach((el,i)=>{ el.style.setProperty('--d',(Math.min(i,10)*0.06)+'s'); el.classList.add('pop'); });
+    });
+  });
+  mo.observe(document.body,{childList:true,subtree:true});
+  
+  // плавное «всплытие» заголовков секций
+  const io2=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.style.animation='heroTitleIn .7s ease both'; io2.unobserve(e.target);} }),{threshold:.35});
+  $$('.section-head h2').forEach(el=>io2.observe(el));
+  $$('.quote-band blockquote').forEach(el=>io2.observe(el));
+
+  // Полоса прогресса прокрутки + тень шапки
+  const progress=$('#scrollProgress'), hdr=document.querySelector('header');
+  const onScroll=()=>{
+    const h=document.documentElement;
+    const max=h.scrollHeight-h.clientHeight;
+    progress.style.width=(max>0?(h.scrollTop/max)*100:0)+'%';
+    hdr.classList.toggle('scrolled', h.scrollTop>10);
+  };
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  renderImages();      // сразу показываем заглушки
+  loadSiteImages();    // фото главной из site_images загружаются первыми
+  loadAll();
+});
+</script>
+</body>
+</html>
