@@ -64,9 +64,9 @@ a{color:inherit}
 .map-overlay path.active{animation:mapPulse 2.2s ease-in-out infinite}
 
 /* Подчёркивание заголовков секций */
-.section-head h2::after{content:'';display:block;width:64px;height:4px;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:2px;margin-top:12px;transition:width .45s ease}
-.section-head h2:hover::after{width:150px}
-.band .section-head h2::after,.band-dark .section-head h2::after{width:64px}
+.section-head h2::after{content:'';display:block;width:64px;height:4px;background:linear-gradient(90deg,var(--red),var(--gold),var(--red));background-size:200% 100%;border-radius:2px;margin-top:12px;transition:width .45s ease;animation:underlineFlow 3.2s linear infinite}
+.section-head h2:hover::after,.section-head:hover h2::after{width:150px}
+@keyframes underlineFlow{to{background-position:-200% 0}}
 
 /* Блик на красных кнопках */
 .btn-red{position:relative;overflow:hidden}
@@ -568,6 +568,7 @@ input[type=file]{width:100%;padding:10px;border:1.5px dashed var(--line);border-
   .section-head{margin-bottom:28px}
   .section-head h2{font-size:1.75rem}
   .section-head h2::after{width:44px;margin-top:9px}
+  .section-head h2:hover::after,.section-head:hover h2::after{width:90px}
   .section-head p{font-size:1rem}
   .thread{gap:14px}
   .thread-item{padding:20px 18px 18px}
@@ -668,6 +669,28 @@ button:active:not(:disabled){transform:scale(.96)}
 .hero-portrait{transition:transform .25s ease-out;will-change:transform}
 .section-head h2{position:relative}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,img[data-si]{opacity:1;transform:none}}
+
+
+/* ===== Нить памяти: карточки одного размера, подробности в окне ===== */
+.thread{align-items:stretch;grid-auto-rows:1fr}
+.thread-item{display:flex;flex-direction:column;height:100%;min-height:300px}
+.thread-item p{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.thread-item .thread-detail,.thread-item:hover .thread-detail,.thread-item.open .thread-detail{display:none}
+.thread-item:hover,.thread-item.open{transform:translateY(-5px)}
+.thread-more{margin-top:auto;padding-top:16px}
+.thread-more span{display:inline-flex;align-items:center;gap:8px;background:var(--gold-soft);color:#7d631f;font-weight:600;font-size:.95rem;padding:8px 18px;border-radius:999px;transition:.25s}
+.thread-item:hover .thread-more span{background:var(--red);color:#fff}
+.thread-item:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.tm-year{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--red);font-weight:700;display:inline-flex;align-items:center;gap:10px}
+.tm-year::before{content:'';width:10px;height:10px;background:var(--gold);transform:rotate(45deg);flex:none}
+#threadModal .modal{max-width:880px}
+.tm-title{font-size:2rem;margin:8px 0 12px;padding-right:40px}
+.tm-lead{font-size:1.08rem;color:#4b443e}
+.tm-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:start;margin-top:22px}
+.tm-grid .thread-facts{margin-top:0}
+.tm-photo{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--sand)}
+.tm-photo img{width:100%;height:auto;max-height:320px;object-fit:cover;display:block}
+@media (max-width:760px){.tm-grid{grid-template-columns:1fr}.thread-item{min-height:0}.tm-title{font-size:1.5rem}}
 
 /* ===== модерация / админка v2 ===== */
 .st-badge{display:inline-block;padding:3px 11px;border-radius:999px;font-size:.74rem;font-weight:700;letter-spacing:.2px;white-space:nowrap}
@@ -851,7 +874,7 @@ button:active:not(:disabled){transform:scale(.96)}
       <div class="section-head">
         <h2>Нить памяти: как рецепт пережил войну</h2>
         <p>Проект устроен как одна дорога: от войны — к сохранённому рецепту, от рецепта — к имени женщины, от имени — к вашей собственной семье. Четыре шага ниже объясняют, почему еда здесь говорит о памяти.</p>
-        <div class="thread-open-hint">Наведите курсор на карточку — она подсветится и раскроется. На телефоне нажмите на неё.</div>
+        <div class="thread-open-hint">Нажмите на карточку — откроется окно, где всё видно сразу: рассказ, факты и фото.</div>
       </div>
       <figure class="head-pic reveal"><img data-si="thread_head" alt="Нить памяти"></figure>
     </div>
@@ -860,6 +883,7 @@ button:active:not(:disabled){transform:scale(.96)}
         <div class="year">1941</div>
         <h3>Кухня уходит в лес</h3>
         <p>С первых месяцев оккупации женщины уходят в партизанские отряды. Там они становятся поварихами и пекарями: варят в чугунах на кострах, пекут хлеб в вырытых ямах.</p>
+        <div class="thread-more"><span>Подробнее &rarr;</span></div>
         <div class="thread-detail">
           <ul class="thread-facts"><li>Пекли в вырытых в земле печах-землянках, замаскированных под кусты.</li><li>Тёрки для драников мастерили из жести и консервных банок.</li><li>На одну повариху порой приходилось до сотни бойцов.</li></ul>
           <div class="thread-photo"><img data-si="thread_1941" alt="Кухня уходит в лес"></div>
@@ -869,6 +893,7 @@ button:active:not(:disabled){transform:scale(.96)}
         <div class="year">1942—1943</div>
         <h3>Хлеб как оружие</h3>
         <p>Подпольщицы прячут раненых, передают в отряды муку и сало, держат явки, где еда и разговор шли вместе. За булку хлеба для партизан можно было заплатить жизнью.</p>
+        <div class="thread-more"><span>Подробнее &rarr;</span></div>
         <div class="thread-detail">
           <ul class="thread-facts"><li>За ночь пекарни выпекали до 30 булок на несколько отрядов сразу.</li><li>Муку и сало носили в лес тайниками — за пазухой, в корзинах с грибами.</li><li>Конспиративные квартиры были одновременно явками и столовыми.</li></ul>
           <div class="thread-photo"><img data-si="thread_1942" alt="Хлеб как оружие"></div>
@@ -878,6 +903,7 @@ button:active:not(:disabled){transform:scale(.96)}
         <div class="year">1944—1945</div>
         <h3>Возвращение к столу</h3>
         <p>После освобождения готовят из того, что уцелело: тыква, картошка, крупа. Продукты собирают всем селом, запекают в чужой печи — своя сгорела. Так рождаются послевоенные варианты старых блюд.</p>
+        <div class="thread-more"><span>Подробнее &rarr;</span></div>
         <div class="thread-detail">
           <ul class="thread-facts"><li>Первый послевоенный хлеб пекли в сохранившихся печах соседей.</li><li>Тыква и крупа стали основой послевоенного стола.</li><li>Продукты на общий обед собирали всем селом.</li></ul>
           <div class="thread-photo"><img data-si="thread_1944" alt="Возвращение к столу"></div>
@@ -887,6 +913,7 @@ button:active:not(:disabled){transform:scale(.96)}
         <div class="year">2026</div>
         <h3>Рецепт у вас дома</h3>
         <p>Те же драники и бабка стоят сегодня на наших столах. Год белорусской женщины — повод записать рецепт своей бабушки и добавить её историю в этот архив.</p>
+        <div class="thread-more"><span>Подробнее &rarr;</span></div>
         <div class="thread-detail">
           <ul class="thread-facts"><li>Запишите рецепт своей бабушки в разделе «Семейные рецепты».</li><li>Оценивайте блюда звёздами и оставляйте отзывы.</li><li>Год белорусской женщины — время записывать и передавать память.</li></ul>
           <div class="thread-photo"><img data-si="thread_2026" alt="Рецепт у вас дома"></div>
@@ -1069,6 +1096,7 @@ button:active:not(:disabled){transform:scale(.96)}
 </div>
 
 <div class="modal-overlay" id="dishModal"><div class="modal"><button class="modal-close" data-close="dishModal" aria-label="Закрыть">&times;</button><div id="modalContent"></div></div></div>
+<div class="modal-overlay" id="threadModal"><div class="modal"><button class="modal-close" data-close="threadModal" aria-label="Закрыть">&times;</button><div id="threadModalContent"></div></div></div>
 <div class="modal-overlay" id="familyViewModal"><div class="modal"><button class="modal-close" data-close="familyViewModal" aria-label="Закрыть">&times;</button><div id="familyViewContent"></div></div></div>
 <div class="modal-overlay" id="familyFormModal">
   <div class="modal">
@@ -1078,6 +1106,7 @@ button:active:not(:disabled){transform:scale(.96)}
     <div class="form-error" id="familyFormError"></div>
     <label class="flabel" for="ffDish">К какому блюду относится рецепт</label>
     <select class="field" id="ffDish"></select>
+    <input class="field" id="ffDishCustom" placeholder="Впишите название блюда, например: Мачанка" maxlength="80" style="display:none;margin-top:10px">
     <label class="flabel" for="ffFrom">От кого рецепт</label>
     <input class="field" id="ffFrom" placeholder="Например: моя бабушка Анна Петровна">
     <label class="flabel" for="ffYears">Годы жизни</label>
@@ -1892,13 +1921,22 @@ function openWoman(id){
 function fillDishSelect(sel){
   sel.innerHTML='<option value="">— не выбрано —</option>'+state.dishes.map(d=>`<option value="${d.id}">${esc(d.title)}</option>`).join('');
 }
+function toggleDishCustom(){
+  const on=$('#ffDish').value==='__custom__';
+  $('#ffDishCustom').style.display=on?'block':'none';
+  if(on) setTimeout(()=>$('#ffDishCustom').focus(),0);
+}
 function openFamilyForm(id){
   if(!state.user){ toast('Войдите, чтобы добавить рецепт', true); openAuth(false); return; }
   const f = id ? famById(id) : null;
   if(id && (!f || !canEditFam(f))){ toast('Нельзя изменить этот рецепт', true); return; }
   state.editFamId = f ? f.id : null;
   fillDishSelect($('#ffDish'));
-  $('#ffDish').value = f && f.dish_id ? f.dish_id : '';
+  $('#ffDish').insertAdjacentHTML('beforeend','<option value="__custom__">Другое блюдо — вписать своё</option>');
+  const isCustom = !!(f && !f.dish_id && f.dish_name);
+  $('#ffDish').value = isCustom ? '__custom__' : (f && f.dish_id ? f.dish_id : '');
+  $('#ffDishCustom').value = isCustom ? f.dish_name : '';
+  toggleDishCustom();
   $('#ffFrom').value = f ? (f.from_name||'') : '';
   $('#ffYears').value = f ? (f.years||'') : '';
   $('#ffText').value = f ? (f.text||'') : '';
@@ -1919,14 +1957,17 @@ async function submitFamily(){
   const from=$('#ffFrom').value.trim(), text=$('#ffText').value.trim();
   if(!from){ showErr('#familyFormError','Укажите, от кого рецепт'); return; }
   if(!text){ showErr('#familyFormError','Напишите рецепт и историю'); return; }
+  if($('#ffDish').value==='__custom__' && !$('#ffDishCustom').value.trim()){ showErr('#familyFormError','Впишите название блюда или выберите из списка'); return; }
   const editing = state.editFamId ? famById(state.editFamId) : null;
   if(editing && !canEditFam(editing)){ showErr('#familyFormError','Нет прав на изменение'); return; }
   loader(true);
   const img=await readFileB64($('#ffImage'));
-  const dishId=$('#ffDish').value||null;
+  const selDish=$('#ffDish').value;
+  const customName=$('#ffDishCustom').value.trim();
+  const dishId=(selDish&&selDish!=='__custom__')?selDish:null;
   const dish=dishId?dishById(dishId):null;
   const admin=isAdmin();
-  const row={ dish_id:dishId, dish_name:dish?dish.title:'', from_name:from, years:$('#ffYears').value.trim(), text };
+  const row={ dish_id:dishId, dish_name:dish?dish.title:(selDish==='__custom__'?customName:''), from_name:from, years:$('#ffYears').value.trim(), text };
   if(img) row.image_url=img; else if(editing && $('#ffRemoveImg').checked) row.image_url=null;
   let error;
   if(editing){
@@ -2416,7 +2457,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
   $$('#belarusOverlay path').forEach(p=>p.addEventListener('click',()=>selectRegion(p.dataset.region)));
 
   // нить памяти: тап на мобильных
-  $$('.thread-item').forEach(t=>t.addEventListener('click',()=>t.classList.toggle('open')));
+  $$('.thread-item').forEach(t=>{
+    t.setAttribute('tabindex','0'); t.setAttribute('role','button');
+    const open=()=>{
+      const img=t.querySelector('.thread-photo img');
+      const src=img&&img.getAttribute('src')?img.getAttribute('src'):'';
+      $('#threadModalContent').innerHTML=`
+        <div class="tm-year">${t.querySelector('.year').innerHTML}</div>
+        <h2 class="tm-title">${t.querySelector('h3').innerHTML}</h2>
+        <p class="tm-lead">${t.querySelector(':scope > p').innerHTML}</p>
+        <div class="tm-grid">
+          <ul class="thread-facts">${t.querySelector('.thread-facts').innerHTML}</ul>
+          ${src?`<div class="tm-photo"><img src="${src}" alt="${esc(img.alt||'')}"></div>`:''}
+        </div>`;
+      openModal('threadModal');
+    };
+    t.addEventListener('click',open);
+    t.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
+  });
 
   // модалки: закрытие
   $$('.modal-close').forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
@@ -2457,6 +2515,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // семейные рецепты
   $('#openFamilyFormBtn').onclick=()=>openFamilyForm();
   $('#ffSubmit').onclick=submitFamily;
+  $('#ffDish').onchange=toggleDishCustom;
 
   // появление при скролле
   const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} }),{threshold:.1});
